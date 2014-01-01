@@ -1,0 +1,117 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <!--Primary Color:
+045797	1E4D71	013862	378BCB	5E9CCB
+Secondary Color A:
+0A0AA4	24247B	03036B	3E3ED2	6565D2
+Secondary Color B:
+00A15C	1E7952	00693C	34D08D	5ED09F-->
+
+    <Color x:Key="Blue">#1E4D71</Color>
+    <Color x:Key="BlueDarker">#013862</Color>
+
+    <Style x:Key="BaseStyle" TargetType="Control">
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+    <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Foreground" Value="WhiteSmoke"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+    </Style>
+    <Style TargetType="TextBox" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border Background="WhiteSmoke" 
+                                            BorderThickness="1" 
+                                            CornerRadius="8"/>
+                        <ScrollViewer Margin="2" x:Name="PART_ContentHost"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="TransparentButton">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="Transparent">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="Image">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+    </Style>
+
+    <Style x:Key="LayoutRootStyle" TargetType="Grid">
+        <Setter Property="Background" Value="Gray" />
+    </Style>
+    
+    <!--TaskList-->
+    <Style x:Key="BlueBorderStyle" TargetType="Border">
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource Blue}" Offset="0"/>
+                    <GradientStop Color="{StaticResource BlueDarker}" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TaskListStyle" TargetType="ListView">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />        
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="TagListStyle" TargetType="ListView">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+
+    <!--Task-->
+    <Style x:Key="TaskBorderStyle" TargetType="Border">
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Background" Value="White" />
+        <Style.Triggers>
+            <Trigger Property="Border.IsMouseOver" Value="True">
+                <Setter Property="Border.BorderBrush" Value="Gold" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="TaskDescriptionStyle" TargetType="TextBlock">
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Block.TextAlignment" Value="Justify"/>
+    </Style>
+    
+    <!--Tag-->
+    <Style x:Key="TagBorderStyle" TargetType="Border">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource Blue}" Offset="0"/>
+                    <GradientStop Color="{StaticResource BlueDarker}" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Border.IsMouseOver" Value="True">
+                <Setter Property="Border.BorderBrush" Value="Gold" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
