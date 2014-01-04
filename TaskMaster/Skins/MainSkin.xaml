@@ -2,13 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
-    <!--Primary Color:
-045797	1E4D71	013862	378BCB	5E9CCB
-Secondary Color A:
-0A0AA4	24247B	03036B	3E3ED2	6565D2
-Secondary Color B:
-00A15C	1E7952	00693C	34D08D	5ED09F-->
-
     <Color x:Key="Blue">#1E4D71</Color>
     <Color x:Key="BlueDarker">#013862</Color>
 
@@ -33,7 +26,12 @@ Secondary Color B:
             </Setter.Value>
         </Setter>
     </Style>
-
+    <Style TargetType="TextBlock" x:Key="TimeText">
+        <Setter Property="Foreground" Value="WhiteSmoke"/>
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontFamily" Value="Microsoft Sans Serif Normal" />
+    </Style>
+    
     <Style TargetType="Button" x:Key="TransparentButton">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
@@ -51,9 +49,7 @@ Secondary Color B:
         <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
     </Style>
 
-    <Style x:Key="LayoutRootStyle" TargetType="Grid">
-        <Setter Property="Background" Value="Gray" />
-    </Style>
+    
     
     <!--TaskList-->
     <Style x:Key="BlueBorderStyle" TargetType="Border">

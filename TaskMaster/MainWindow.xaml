@@ -6,11 +6,16 @@
         xmlns:ignore="http://www.ignore.com"
         xmlns:converters="clr-namespace:TaskMaster.Model.Converters"
         mc:Ignorable="d ignore"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         Height="900"
         Width="1024"
         Title="Task Master"
-        WindowState="Maximized"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        Background="Transparent"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Loaded="Window_Loaded"> 
     <Window.Resources>
         <ResourceDictionary>
@@ -24,179 +29,221 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid x:Name="LayoutRoot" Style="{StaticResource LayoutRootStyle}">
-        <Grid.Background>
-            <ImageBrush ImageSource="Images/mainWindowBack.jpg" RenderOptions.BitmapScalingMode="LowQuality"/>
-        </Grid.Background>
+    <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*" />
-            <ColumnDefinition Width="150" />
-            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <DockPanel Grid.Row="0"
-                       Margin="30,30,0,0">
-                <Button DockPanel.Dock="Right"
-                        HorizontalAlignment="Right"
-                        Width="100"
-                        Command="{Binding AddNewTaskItemCmd}">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal" Margin="2,0,5,0">
-                            <Image Source="Images/plus.png" Margin="0,0,5,0"/>
-                            <TextBlock Text="Add New" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-            </DockPanel>
-            <ListView
-                    x:Name="TaskListView"
-                    Grid.Row="1"
-                    Margin="30,10,0,30"
-                    ItemsSource="{Binding UnarchivedTaskList}" 
-                    SelectedItem="{Binding SelectedTask}"
-                    SelectionMode="Single"
-                    Style="{StaticResource TaskListStyle}"
-                    SelectionChanged="TaskListView_SelectionChanged">
-                <ListView.Resources>
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gold" />
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
-                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Gold" />
-                </ListView.Resources>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Border Style="{StaticResource TaskBorderStyle}" Margin="5" Width="{Binding Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}">
-                                <Grid>
-                                    <StackPanel Orientation="Vertical" Margin="10">
-                                        <TextBlock Text="{Binding Tag}" />
-                                        <TextBlock Text="{Binding Description}" Style="{StaticResource TaskDescriptionStyle}" />
-                                    </StackPanel>
-                                    <Image 
-                                        Visibility="{Binding Path=PlayingState, Converter={StaticResource PlayingToVisibilityConverter}}"
-                                        RenderOptions.BitmapScalingMode="Fant"
-                                        Source="Images/play.png" 
-                                        Width="30" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                                    <Image 
-                                        Visibility="{Binding Path=PlayingState, Converter={StaticResource PausedToVisibilityConverter}}"
-                                        RenderOptions.BitmapScalingMode="Fant"
-                                        Source="Images/pause.png" 
-                                        Width="30" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                                </Grid>
-                            </Border>
-                            <Button Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, 
-                                                Path=IsMouseOver, Converter={StaticResource EnabledToVisibilityConverter}}"
-                                    Style="{StaticResource TransparentButton}"
-                                    Cursor="Hand"
-                                    Height="30"
-                                    ToolTip="Archive this task"
-                                    VerticalAlignment="Bottom"
-                                    HorizontalAlignment="Right"
-                                    Command="{Binding Path=DataContext.ArchiveTaskItemCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
-                                    CommandParameter="{Binding Path=Id}">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="Images/finished.png" RenderOptions.BitmapScalingMode="Fant"/>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-        <StackPanel Grid.Column="1"
-                    Margin="0,30,0,0"
-                    Orientation="Vertical"
-                    HorizontalAlignment="Center">
-            <Label Content="{Binding TaskPlayer.EllapsedPlayingTime}" HorizontalAlignment="Center"/>
-            <Button Width="80" Command="{Binding PlayTaskItemCmd}"
-                    Style="{StaticResource TransparentButton}"
-                    Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, 
-                    Converter={StaticResource EnabledToVisibilityConverter}}">
-                <Button.Content>
-                    <StackPanel>
-                        <Image Source="Images/play.png"/>
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Width="80" Command="{Binding PauseTaskItemCmd}"
-                    Style="{StaticResource TransparentButton}"
-                    Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, 
-                    Converter={StaticResource EnabledToVisibilityConverter}}">
-                <Button.Content>
-                    <Image Source="Images/pause.png"/>
-                </Button.Content>
-            </Button>
-        </StackPanel>
-        <Border
-            Grid.Column="2"
-            Height="Auto"
-            Margin="0,30,30,20"
-            VerticalAlignment="Top"
-            Visibility="{Binding Path=SelectedTask, Converter={StaticResource NullToVisibilityConverter}}"
-            Style="{StaticResource BlueBorderStyle}">
-            <Grid Margin="30">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" CornerRadius="30">
+            <Border.Background>
+                <ImageBrush ImageSource="Images/mainWindowBack.jpg" RenderOptions.BitmapScalingMode="LowQuality"/>
+            </Border.Background>
+            <Grid>      
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label x:Name="ChooseATagLabel" Content="Choose a tag:"/>
-                <ListView x:Name="ChooseATagListView"
-                          Grid.Row="0" Grid.Column="1"
-                          Style="{StaticResource TagListStyle}"
-                          ItemsSource="{Binding AvailableTagList}"
-                          SelectedItem="{Binding SelectedTag}">
+                <DockPanel Grid.Row="0"
+                           Margin="30,30,0,0">
+                    <Button DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Width="100"
+                            Command="{Binding AddNewTaskItemCmd}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="2,0,5,0">
+                                <Image Source="Images/plus.png" Margin="0,0,5,0"/>
+                                <TextBlock Text="Add New" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </DockPanel>
+                <ListView
+                        x:Name="TaskListView"
+                        Grid.Row="1"
+                        Margin="30,10,0,30"
+                        ItemsSource="{Binding UnarchivedTaskList}" 
+                        SelectedItem="{Binding SelectedTask}"
+                        SelectionMode="Single"
+                        Style="{StaticResource TaskListStyle}"
+                        SelectionChanged="TaskListView_SelectionChanged">
                     <ListView.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gold" />
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
                         <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Gold" />
                     </ListView.Resources>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
-                            <DataTemplate>
-                                    <Border Style="{StaticResource TagBorderStyle}" Margin="1" Width="90">
-                                        <Label Content="{Binding}" FontSize="12"/>
-                                    </Border>
-                            </DataTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Border Style="{StaticResource TaskBorderStyle}" Margin="5" Width="{Binding Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}">
+                                    <Grid>
+                                        <StackPanel Orientation="Vertical" Margin="10">
+                                            <TextBlock Text="{Binding Tag}" />
+                                            <TextBlock Text="{Binding Description}" Style="{StaticResource TaskDescriptionStyle}" />
+                                        </StackPanel>
+                                        <Image 
+                                            Visibility="{Binding Path=PlayingState, Converter={StaticResource PlayingToVisibilityConverter}}"
+                                            RenderOptions.BitmapScalingMode="Fant"
+                                            Source="Images/play.png" 
+                                            Width="30" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                                        <Image 
+                                            Visibility="{Binding Path=PlayingState, Converter={StaticResource PausedToVisibilityConverter}}"
+                                            RenderOptions.BitmapScalingMode="Fant"
+                                            Source="Images/pause.png" 
+                                            Width="30" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </Border>
+                                <Button Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, 
+                                                    Path=IsMouseOver, Converter={StaticResource EnabledToVisibilityConverter}}"
+                                        Style="{StaticResource TransparentButton}"
+                                        Cursor="Hand"
+                                        Height="30"
+                                        ToolTip="Archive this task"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Right"
+                                        Command="{Binding Path=DataContext.ArchiveTaskItemCmd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
+                                        CommandParameter="{Binding Path=Id}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="Images/finished.png" RenderOptions.BitmapScalingMode="Fant"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Label Grid.Row="1" Grid.Column="0" Content="Tag:" />
-                <Grid Grid.Row="1" Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" 
-                             Margin="0,5,0,0"
-                             Text="{Binding SelectedTask.Tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    </TextBox>
-                    <Button Grid.Column="1" Style="{StaticResource TransparentButton}" Cursor="Hand" ToolTip="Choose a tag" Click="ChooseATag_Click" Margin="5,0,0,0">
-                        <Image Source="Images/tags.png" RenderOptions.BitmapScalingMode="Fant" Height="25"/>
-                    </Button>
-                </Grid>
-                <Label Grid.Row="2" Grid.Column="0" Content="Description:" Margin="0,0,0,0"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedTask.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            Margin="0,5,0,0" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
-                <Label Grid.Row="3" Grid.Column="0" Content="Played today:" Margin="0,0,0,0"/>
-                <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding SelectedTask.CurrentSessionPlayedTime}" Margin="0"/>
-                <Label Grid.Row="4" Grid.Column="0" Content="Played total:" Margin="0,0,0,0"/>
-                <Label Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding SelectedTask.TotalPlayedTime}" Margin="0"/>
             </Grid>
+            <Border
+                Grid.Column="2"
+                Height="Auto"
+                Margin="0,30,30,20"
+                VerticalAlignment="Center"
+                Visibility="{Binding Path=SelectedTask, Converter={StaticResource NullToVisibilityConverter}}"
+                Style="{StaticResource BlueBorderStyle}">
+                <Grid Margin="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label x:Name="ChooseATagLabel" Content="Choose a tag:"/>
+                    <ListView x:Name="ChooseATagListView"
+                            Grid.Row="0" Grid.Column="1"
+                            Style="{StaticResource TagListStyle}"
+                            ItemsSource="{Binding AvailableTagList}"
+                            SelectedItem="{Binding SelectedTag}">
+                        <ListView.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gold" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Gold" />
+                        </ListView.Resources>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource TagBorderStyle}" Margin="1" Width="90">
+                                    <Label Content="{Binding}" FontSize="12"/>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Tag:" />
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" 
+                                Margin="0,5,0,0"
+                                Text="{Binding SelectedTask.Tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </TextBox>
+                        <Button Grid.Column="1" Style="{StaticResource TransparentButton}" Cursor="Hand" ToolTip="Choose a tag" Click="ChooseATag_Click" Margin="5,0,0,0">
+                            <Image Source="Images/tags.png" RenderOptions.BitmapScalingMode="Fant" Height="25"/>
+                        </Button>
+                    </Grid>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Description:" Margin="0,0,0,0"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedTask.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="0,5,0,0" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                    <!--<Label Grid.Row="3" Grid.Column="0" Content="Played today:" Margin="0,25,0,0"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Margin="5,15,0,4" VerticalAlignment="Bottom" Style="{StaticResource TimeText}">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0:D2}:{1:D2}">
+                                <Binding Path="SelectedTask.CurrentSessionPlayedTime.Hours" />
+                                <Binding Path="SelectedTask.CurrentSessionPlayedTime.Minutes" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Label Grid.Row="4" Grid.Column="0" Content="Total:" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Margin="5,5,0,4" VerticalAlignment="Bottom" Style="{StaticResource TimeText}" >
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0:D2}:{1:D2}">
+                                <Binding Path="SelectedTask.TotalPlayedTime.Hours" />
+                                <Binding Path="SelectedTask.TotalPlayedTime.Minutes" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>-->
+                </Grid>
+            </Border>
+        </Grid>
         </Border>
+        <StackPanel Grid.Column="1" Margin="-30,0,0,0" VerticalAlignment="Center">
+            <Button Width="120" Command="{Binding PlayTaskItemCmd}"
+                        Style="{StaticResource TransparentButton}"
+                        Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, 
+                        Converter={StaticResource EnabledToVisibilityConverter}}">
+                <Button.Content>
+                    <Grid>
+                        <Image Source="Images/Play.png"/>
+                        <TextBlock 
+                                Text="{Binding TaskPlayer.EllapsedPlayingTime}" 
+                                Margin="25,30,0,5"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" 
+                                Style="{StaticResource TimeText}">
+                            <TextBlock.RenderTransform>
+                                <RotateTransform Angle="-30"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+
+            <Button Width="120" Command="{Binding PauseTaskItemCmd}"
+                        Style="{StaticResource TransparentButton}"
+                        Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, 
+                        Converter={StaticResource EnabledToVisibilityConverter}}">
+                <Button.Content>
+                    <Grid>
+                        <Image Source="Images/Pause.png"/>
+                        <TextBlock 
+                                Text="{Binding TaskPlayer.EllapsedPlayingTime}" 
+                                Margin="25,30,0,5"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" 
+                                Background="Black"
+                                Style="{StaticResource TimeText}">
+                            <TextBlock.RenderTransform>
+                                <RotateTransform Angle="-30"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

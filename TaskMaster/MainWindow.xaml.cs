@@ -55,5 +55,10 @@ namespace TaskMaster
             this.ChooseATagLabel.Visibility = visibility;
             this.ChooseATagListView.Visibility = visibility;
         }
+
+        private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }
