@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMaster", "Tasker\TaskMaster.csproj", "{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMaster.Test", "TaskMaster.Test\TaskMaster.Test.csproj", "{630EDEEC-323F-4885-A0AD-050CF53F0ABD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMaster", "TaskMaster\TaskMaster.csproj", "{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{630EDEEC-323F-4885-A0AD-050CF53F0ABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{630EDEEC-323F-4885-A0AD-050CF53F0ABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{630EDEEC-323F-4885-A0AD-050CF53F0ABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{630EDEEC-323F-4885-A0AD-050CF53F0ABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
