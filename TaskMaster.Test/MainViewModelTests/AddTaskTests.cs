@@ -17,15 +17,15 @@ namespace TaskMaster.Test.MainViewModelTests
         {
             // Given
             var sut = MVMHelpers.SutWithTaskList();
-            var previousTaskListCount = sut.UnarchivedTaskList.Count();
-            var previousTaskListFirstElement = sut.UnarchivedTaskList.First();
+            var previousTaskListCount = sut.ActiveTaskList.Count();
+            var previousTaskListFirstElement = sut.ActiveTaskList.First();
 
             // When
             sut.AddNewTaskItemCmd.Execute(null);
 
             // Then
-            Assert.IsTrue(sut.UnarchivedTaskList.Count == previousTaskListCount + 1);
-            Assert.IsTrue(sut.UnarchivedTaskList.First() != previousTaskListFirstElement);
+            Assert.IsTrue(sut.ActiveTaskList.Count == previousTaskListCount + 1);
+            Assert.IsTrue(sut.ActiveTaskList.First() != previousTaskListFirstElement);
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace TaskMaster.Test.MainViewModelTests
             sut.AddNewTaskItemCmd.Execute(null);
 
             // Then
-            Assert.IsTrue(sut.UnarchivedTaskList == null);
+            Assert.IsTrue(sut.ActiveTaskList == null);
         }
 
         [Test]
@@ -46,13 +46,13 @@ namespace TaskMaster.Test.MainViewModelTests
         {
             // Given
             var sut = MVMHelpers.SutWithNullTaskList();
-            sut.UnarchivedTaskList = new ObservableCollection<TaskItem>();
+            sut.ActiveTaskList = new ObservableCollection<TaskItem>();
 
             // When
             sut.AddNewTaskItemCmd.Execute(null);
 
             // Then
-            Assert.IsTrue(sut.UnarchivedTaskList.Count == 1);
+            Assert.IsTrue(sut.ActiveTaskList.Count == 1);
         }
     }
 }

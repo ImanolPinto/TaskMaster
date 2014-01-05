@@ -13,27 +13,27 @@ namespace TaskMaster.Test.MainViewModelTests
     {
 
         [Test]
-        public void Given_a_task_guid_from_the_unarchived_list_when_the_ArchiveTask_command_is_handled_then_the_task_is_removed_from_the_Unarchived_task_list()
+        public void Given_a_task_guid_from_the_active_list_when_the_ArchiveTask_command_is_handled_then_the_task_is_removed_from_the_Active_task_list()
         {
             // Given
             Mock<ITaskListDataService> taskListDataServiceMock;
             var sut = MVMHelpers.SutWithTaskList(out taskListDataServiceMock);
-            var guidToArchive = sut.UnarchivedTaskList[0].Id;
-            var taskToArchive = sut.UnarchivedTaskList[0];
+            var guidToArchive = sut.ActiveTaskList[0].Id;
+            var taskToArchive = sut.ActiveTaskList[0];
 
             taskListDataServiceMock.Setup(x => x.ArchiveTask(taskToArchive)).Returns(ArchiveTaskResult.Ok);
-            var previousUnarchivedTaskCount = sut.UnarchivedTaskList.Count();
+            var previousUnarchivedTaskCount = sut.ActiveTaskList.Count();
 
             // When
             sut.ArchiveTaskItemCmd.Execute(guidToArchive);
 
             // Then
-            Assert.IsTrue(sut.UnarchivedTaskList.Count == previousUnarchivedTaskCount - 1);
+            Assert.IsTrue(sut.ActiveTaskList.Count == previousUnarchivedTaskCount - 1);
             taskListDataServiceMock.Verify(x => x.ArchiveTask(taskToArchive), Times.Once());
         }
 
         [Test]
-        public void Given_a_taskId_that_is_not_in_the_unarchived_list_when_ArchiveTaskCmd_is_handled_it_does_nothing()
+        public void Given_a_taskId_that_is_not_in_the_active_list_when_ArchiveTaskCmd_is_handled_it_does_nothing()
         {
             // Given
             var sut = MVMHelpers.SutWithTaskList();
@@ -43,7 +43,7 @@ namespace TaskMaster.Test.MainViewModelTests
         }
 
         [Test]
-        public void Given_a_null_unarchived_list_when_ArchiveTaskCmd_is_handled_it_does_nothing()
+        public void Given_a_null_active_list_when_ArchiveTaskCmd_is_handled_it_does_nothing()
         {
             // Given
             var sut = MVMHelpers.SutWithNullTaskList();
@@ -58,7 +58,7 @@ namespace TaskMaster.Test.MainViewModelTests
             // Given
             Mock<ITaskPlayer> taskPlayerMock;
             var sut = MVMHelpers.SutWithTaskListAndPlayerMock(out taskPlayerMock);
-            var playingTask = sut.UnarchivedTaskList[0];
+            var playingTask = sut.ActiveTaskList[0];
             playingTask.PlayingState = PlayingState.Playing;
             sut.TaskPlayer.Play(playingTask);
 

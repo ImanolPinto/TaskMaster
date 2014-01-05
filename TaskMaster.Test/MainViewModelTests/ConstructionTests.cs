@@ -47,11 +47,11 @@ namespace TaskMaster.Test.MainViewModelTests
 
             // When
             var mainViewModel = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
-            while (mainViewModel.UnarchivedTaskList == null) ; // wait for the async bgworker to complete
+            while (mainViewModel.ActiveTaskList == null) ; // wait for the async bgworker to complete
 
             // Then
             taskListServiceMock.Verify(x => x.GetUnarchivedTasks(), Times.Once());
-            Assert.AreEqual(mainViewModel.UnarchivedTaskList, new ObservableCollection<TaskItem>(taskList));
+            Assert.AreEqual(mainViewModel.ActiveTaskList, new ObservableCollection<TaskItem>(taskList));
         }
 
         #region Archive task

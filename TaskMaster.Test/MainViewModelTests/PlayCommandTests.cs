@@ -19,7 +19,7 @@ namespace TaskMaster.Test.MainViewModelTests
             MainViewModel mainViewModel;
             Mock<ITaskPlayer> taskPlayer;
             mainViewModel = MVMHelpers.SutWithTaskListAndPlayerMock(out taskPlayer);
-            mainViewModel.SelectedTask = mainViewModel.UnarchivedTaskList[0];
+            mainViewModel.SelectedTask = mainViewModel.ActiveTaskList[0];
             taskPlayer.Setup(x => x.CanPlay(mainViewModel.SelectedTask)).Returns(true);
 
             // When
@@ -61,7 +61,7 @@ namespace TaskMaster.Test.MainViewModelTests
         {
             // Given
             var mainViewModel = MVMHelpers.SutWithTaskList();
-            mainViewModel.SelectedTask = mainViewModel.UnarchivedTaskList[0];
+            mainViewModel.SelectedTask = mainViewModel.ActiveTaskList[0];
             mainViewModel.SelectedTask.PlayingState = PlayingState.Playing;
 
             // When
@@ -73,11 +73,11 @@ namespace TaskMaster.Test.MainViewModelTests
         {
             // Given
             var mainViewModel = MVMHelpers.SutWithTaskList();
-            mainViewModel.SelectedTask = mainViewModel.UnarchivedTaskList[0];
+            mainViewModel.SelectedTask = mainViewModel.ActiveTaskList[0];
             mainViewModel.PlayTaskItemCmd.Execute(null);
 
             // When
-            mainViewModel.SelectedTask = mainViewModel.UnarchivedTaskList[1];
+            mainViewModel.SelectedTask = mainViewModel.ActiveTaskList[1];
 
             // Then
             Assert.IsFalse(mainViewModel.PlayTaskItemCmd.CanExecute(null));

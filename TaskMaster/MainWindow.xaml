@@ -71,7 +71,7 @@
                             x:Name="TaskListView"
                             Grid.Row="1"
                             Margin="30,10,0,30"
-                            ItemsSource="{Binding UnarchivedTaskList}" 
+                            ItemsSource="{Binding ActiveTaskList}" 
                             SelectedItem="{Binding SelectedTask}"
                             SelectionMode="Single"
                             Style="{StaticResource TaskListStyle}"

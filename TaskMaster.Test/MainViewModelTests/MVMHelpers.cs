@@ -46,7 +46,7 @@ namespace TaskMaster.Test
             timeProviderMock.Setup(x => x.Now()).Returns(DateTime.Now);
 
             var sut = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
-            while (sut.UnarchivedTaskList == null) ; // wait for the async bgworker to complete
+            while (sut.ActiveTaskList == null) ; // wait for the async bgworker to complete
 
             return sut;
         }
@@ -73,7 +73,7 @@ namespace TaskMaster.Test
             timeProviderMock.Setup(x => x.Now()).Returns(playingDate);
 
             var sut = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
-            while (sut.UnarchivedTaskList == null) ; // wait for the async bgworker to complete
+            while (sut.ActiveTaskList == null) ; // wait for the async bgworker to complete
 
             return sut;
         }
@@ -87,7 +87,7 @@ namespace TaskMaster.Test
         {
             Mock<ITaskPlayer> taskPlayerMock = null;
             sut = SutWithTaskListAndPlayerMock(out taskPlayerMock);
-            var task_aux = sut.UnarchivedTaskList[0];
+            var task_aux = sut.ActiveTaskList[0];
             taskPlayerMock.Setup(x => x.CanPlay(task_aux)).Returns(playable);
             task = task_aux;
         }
@@ -95,20 +95,20 @@ namespace TaskMaster.Test
         public static void SutWithFirstPausableTask(out MainViewModel sut, out TaskItem task)
         {
             SutWithFirstTaskPauseSetup(out sut, out task, true);
-            sut.UnarchivedTaskList[0].PlayingState = PlayingState.Playing;
+            sut.ActiveTaskList[0].PlayingState = PlayingState.Playing;
         }
 
         public static void SutWithFirstNoPausableAndPlayingTask(out MainViewModel sut, out TaskItem task)
         {
             SutWithFirstTaskPauseSetup(out sut, out task, false);
-            sut.UnarchivedTaskList[0].PlayingState = PlayingState.Playing;
+            sut.ActiveTaskList[0].PlayingState = PlayingState.Playing;
         }
 
         public static void SutWithFirstTaskPauseSetup(out MainViewModel sut, out TaskItem task, bool pausable)
         {
             Mock<ITaskPlayer> taskPlayerMock = null;
             sut = SutWithTaskListAndPlayerMock(out taskPlayerMock);
-            var task_aux = sut.UnarchivedTaskList[0];
+            var task_aux = sut.ActiveTaskList[0];
             taskPlayerMock.Setup(x => x.CanPause(task_aux)).Returns(pausable);
             task = task_aux;
         }

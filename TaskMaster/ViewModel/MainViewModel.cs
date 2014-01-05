@@ -36,24 +36,23 @@ namespace TaskMaster.ViewModel
 
         #region Properties
 
-        string _unarchivedTaskListPropertyName = "UnarchivedTaskList";
-        ObservableCollection<TaskItem> _unarchivedTaskList;
-        public ObservableCollection<TaskItem> UnarchivedTaskList
+        ObservableCollection<TaskItem> _activeTaskList;
+        public ObservableCollection<TaskItem> ActiveTaskList
         {
             get
             {
-                return _unarchivedTaskList;
+                return _activeTaskList;
             }
 
             set
             {
-                if (_unarchivedTaskList == value)
+                if (_activeTaskList == value)
                 {
                     return;
                 }
 
-                _unarchivedTaskList = value;
-                RaisePropertyChanged(_unarchivedTaskListPropertyName);
+                _activeTaskList = value;
+                RaisePropertyChanged("ActiveTaskList");
             }
         }
 
@@ -154,18 +153,18 @@ namespace TaskMaster.ViewModel
         {
             var taskList = _taskListService.GetUnarchivedTasks();
             if (taskList != null)
-                UnarchivedTaskList = new ObservableCollection<TaskItem>(taskList);
+                ActiveTaskList = new ObservableCollection<TaskItem>(taskList);
 
             if (IsInDesignMode)
             {
-                SelectedTask = UnarchivedTaskList[0];
+                SelectedTask = ActiveTaskList[0];
             }
         }
 
         private bool CanPlayTaskItem()
         {
-            return UnarchivedTaskList != null && 
-                UnarchivedTaskList.Contains(_selectedTask) && 
+            return ActiveTaskList != null && 
+                ActiveTaskList.Contains(_selectedTask) && 
                 ThereIsNotAPausableTaskInTheList() &&
                 _taskPlayer.CanPlay(_selectedTask);
         }
@@ -203,12 +202,12 @@ namespace TaskMaster.ViewModel
                 return;
 
             var newTask = new TaskItemBuilder(Guid.NewGuid()).Build();
-            UnarchivedTaskList.Insert(0, newTask);
+            ActiveTaskList.Insert(0, newTask);
         }
 
         private bool CanAddNewTaskItem()
         {
-            return UnarchivedTaskList != null;
+            return ActiveTaskList != null;
         }
 
         private void ArchiveTaskItem(Guid taskId)
@@ -216,7 +215,7 @@ namespace TaskMaster.ViewModel
             if (!CanArchiveTaskItem(taskId))
                 return;
 
-            var taskToArchive = UnarchivedTaskList.FirstOrDefault(x => x.Id == taskId);
+            var taskToArchive = ActiveTaskList.FirstOrDefault(x => x.Id == taskId);
             var result = _taskListService.ArchiveTask(taskToArchive);
             
             if (result != ArchiveTaskResult.Ok)
@@ -225,17 +224,17 @@ namespace TaskMaster.ViewModel
             if (taskToArchive.PlayingState == PlayingState.Playing)
                 _taskPlayer.Pause(taskToArchive);
 
-            UnarchivedTaskList.Remove(taskToArchive);
+            ActiveTaskList.Remove(taskToArchive);
         }
 
         private bool CanArchiveTaskItem(Guid taskId)
         {
-            return UnarchivedTaskList != null && UnarchivedTaskList.FirstOrDefault(x => x.Id == taskId) != null;
+            return ActiveTaskList != null && ActiveTaskList.FirstOrDefault(x => x.Id == taskId) != null;
         }
 
         private void ClearAllTheStatesExceptForTheTask(TaskItem task)
         {
-            this.UnarchivedTaskList
+            this.ActiveTaskList
                 .Where(x => x != task).ToList()
                 .ForEach(x => x.PlayingState = null);
         }
@@ -252,12 +251,12 @@ namespace TaskMaster.ViewModel
 
         private TaskItem FirstPausableTask()
         {
-            return UnarchivedTaskList.Where(x => _taskPlayer.CanPause(x)).FirstOrDefault() as TaskItem;
+            return ActiveTaskList.Where(x => _taskPlayer.CanPause(x)).FirstOrDefault() as TaskItem;
         }
 
         private void UpdateAvailableTagList()
         {
-            AvailableTagList = new ObservableCollection<string>(_unarchivedTaskList.Where(x => x.Tag != null && x.Tag.Trim() != String.Empty).Select(x => x.Tag).Distinct());
+            AvailableTagList = new ObservableCollection<string>(_activeTaskList.Where(x => x.Tag != null && x.Tag.Trim() != String.Empty).Select(x => x.Tag).Distinct());
         }
 
         ////public override void Cleanup()
