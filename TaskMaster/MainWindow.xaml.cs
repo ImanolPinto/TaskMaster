@@ -47,12 +47,11 @@ namespace TaskMaster
 
         private Visibility GetTagChooserVisibility()
         {
-            return this.ChooseATagLabel.Visibility;
+            return this.ChooseATagListView.Visibility;
         }
 
         private void SetTagChooserVisibility(Visibility visibility)
         {
-            this.ChooseATagLabel.Visibility = visibility;
             this.ChooseATagListView.Visibility = visibility;
         }
 

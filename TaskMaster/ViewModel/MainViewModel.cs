@@ -157,7 +157,9 @@ namespace TaskMaster.ViewModel
                 UnarchivedTaskList = new ObservableCollection<TaskItem>(taskList);
 
             if (IsInDesignMode)
+            {
                 SelectedTask = UnarchivedTaskList[0];
+            }
         }
 
         private bool CanPlayTaskItem()

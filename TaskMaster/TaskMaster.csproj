@@ -79,6 +79,7 @@
     <Compile Include="Model\Builders\TaskItemBuilder.cs" />
     <Compile Include="Model\BusinessServices\ITaskPlayer.cs" />
     <Compile Include="Model\BusinessServices\ITimeProvider.cs" />
+    <Compile Include="Model\Converters\NotNullToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\EnabledToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\PausedToVisibilityConverter.cs" />
