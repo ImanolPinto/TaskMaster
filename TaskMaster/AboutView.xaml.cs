@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Reflection;
+using System.Windows;
 
 namespace TaskMaster
 {
@@ -13,6 +14,8 @@ namespace TaskMaster
         public AboutView()
         {
             InitializeComponent();
+
+            this.VersionInfo.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version;
         }
 
         private void Exit_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

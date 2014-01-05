@@ -237,7 +237,7 @@
                    HorizontalAlignment="Left" 
                    Margin="20,15,15,0"
                    Width="38"
-                   Cursor="Hand" MouseLeftButtonDown="About_MouseLeftButtonDown">
+                   Cursor="Hand" MouseLeftButtonDown="About_MouseLeftButtonDown" ToolTip="About TaskMaster">
             <Image.Effect>
                 <DropShadowEffect Direction="90" Color="Gold" />
             </Image.Effect>

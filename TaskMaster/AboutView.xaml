@@ -29,7 +29,10 @@
             <DockPanel Margin="30">
                 <Image Source="Images/taskmaster_by_the_hand.jpg" Width="440" DockPanel.Dock="Left"/>
                 <StackPanel Margin="20,0,10,10">
-                    <Label HorizontalAlignment="Center" FontWeight="Bold" FontSize="25">TaskMaster</Label>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontWeight="Bold" FontSize="25">TaskMaster</Label>
+                        <Label x:Name="VersionInfo" Content="v0.1" VerticalAlignment="Bottom" Margin="5,0,0,2"/>
+                    </StackPanel>
                     <TextBlock Style="{StaticResource AboutTextBlockStyle}"
                                FontStyle="Italic"
                                Margin="0,10,0,0">
