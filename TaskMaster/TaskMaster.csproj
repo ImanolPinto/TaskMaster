@@ -79,6 +79,8 @@
     <Compile Include="Model\Builders\TaskItemBuilder.cs" />
     <Compile Include="Model\BusinessServices\ITaskPlayer.cs" />
     <Compile Include="Model\BusinessServices\ITimeProvider.cs" />
+    <Compile Include="Model\Converters\NormalToVisibilityConverter.cs" />
+    <Compile Include="Model\Converters\MaximizedToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\NotNullToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\EnabledToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\NullToVisibilityConverter.cs" />
@@ -157,6 +159,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\maximize.png" />
+    <Resource Include="Images\minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\restore.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

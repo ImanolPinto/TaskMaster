@@ -6,6 +6,7 @@
         xmlns:ignore="http://www.ignore.com"
         xmlns:converters="clr-namespace:TaskMaster.Model.Converters"
         mc:Ignorable="d ignore"
+        Name="window"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Height="800"
@@ -27,6 +28,8 @@
             <converters:EnabledToVisibilityConverter x:Key="EnabledToVisibilityConverter" />
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <converters:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
+            <converters:MaximizedToVisibilityConverter x:Key="MaximizedToVisibilityConverter" />
+            <converters:NormalToVisibilityConverter x:Key="NormalToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -110,7 +113,7 @@
                        HorizontalAlignment="Center"
                        Visibility="{Binding Path=SelectedTask, Converter={StaticResource NotNullToVisibilityConverter}}"/>
                 <Grid Grid.Column="2" 
-                      Margin="0,35,30,0"
+                      Margin="0,63,30,0"
                       Visibility="{Binding Path=SelectedTask, Converter={StaticResource NullToVisibilityConverter}}">
                         <Border
                             Height="Auto"
@@ -227,6 +230,18 @@
                     </Grid>
                 </Button.Content>
             </Button>
+        </StackPanel>
+        <StackPanel Grid.ColumnSpan="2"
+            Orientation="Horizontal"
+            Margin="10"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right">
+            <Image Source="Images/minimize.png" Height="20" ToolTip="Minimize" MouseDown="Minimize_MouseDown" Cursor="Hand" Margin="2"/>
+            <Image Source="Images/maximize.png" Height="20" ToolTip="Maximize" MouseDown="Maximize_MouseDown" Cursor="Hand" Margin="2" 
+                   Visibility="{Binding ElementName=window, Path=WindowState, Converter={StaticResource NormalToVisibilityConverter}}"/>
+            <Image Source="Images/restore.png" Height="20" ToolTip="Restore" MouseDown="Restore_MouseDown" Cursor="Hand" Margin="2"
+                   Visibility="{Binding ElementName=window, Path=WindowState, Converter={StaticResource MaximizedToVisibilityConverter}}"/>
+            <Image Source="Images/exit.png" Height="20" ToolTip="Exit" MouseDown="Exit_MouseDown" Cursor="Hand" Margin="2"/>
         </StackPanel>
     </Grid>
 </Window>

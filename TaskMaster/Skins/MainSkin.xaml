@@ -66,11 +66,13 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />        
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
     </Style>
     <Style x:Key="TagListStyle" TargetType="ListView">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
     <!--Task-->
