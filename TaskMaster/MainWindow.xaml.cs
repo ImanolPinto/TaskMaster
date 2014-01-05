@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using TaskMaster.Model;
 using TaskMaster.ViewModel;
 using WPF.JoshSmith.ServiceProviders.UI;
@@ -57,6 +58,9 @@ namespace TaskMaster
 
         private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if (Mouse.LeftButton != MouseButtonState.Pressed)
+                return;
+
             this.DragMove();
         }
 
@@ -78,6 +82,12 @@ namespace TaskMaster
         private void Minimize_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             this.WindowState = System.Windows.WindowState.Minimized;
+        }
+
+        private void TextBlock_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            AboutView about = new AboutView();
+            about.ShowDialog();
         }
     }
 }

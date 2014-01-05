@@ -231,6 +231,13 @@
                 </Button.Content>
             </Button>
         </StackPanel>
+        <TextBlock Grid.Column="1" 
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left" 
+                   Margin="30,10,20,0"
+                   Text="About TaskMaster" FontSize="10" Foreground="WhiteSmoke"
+                   TextDecorations="Underline"
+                   Cursor="Hand" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"/>
         <StackPanel Grid.ColumnSpan="2"
             Orientation="Horizontal"
             Margin="10"

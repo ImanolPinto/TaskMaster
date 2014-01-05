@@ -1,0 +1,53 @@
+﻿<Window x:Class="TaskMaster.AboutView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        Width="900"
+        Height="500"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        Background="Transparent">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border CornerRadius="30" BorderBrush="WhiteSmoke" BorderThickness="4">
+        <Border.Background>
+            <ImageBrush ImageSource="Images/mainWindowBack.jpg" RenderOptions.BitmapScalingMode="LowQuality"/>
+        </Border.Background>
+        <Grid>
+            <Image Source="Images/exit.png" Height="20" ToolTip="Exit" MouseDown="Exit_MouseDown" Cursor="Hand" Margin="15" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <DockPanel Margin="30">
+                <Image Source="Images/taskmaster_by_the_hand.jpg" Width="440" DockPanel.Dock="Left"/>
+                <StackPanel Margin="20,0,10,10">
+                    <Label HorizontalAlignment="Center" FontWeight="Bold" FontSize="25">TaskMaster</Label>
+                    <TextBlock Style="{StaticResource AboutTextBlockStyle}"
+                               FontStyle="Italic"
+                               Margin="0,10,0,0">
+                        Taskmaster possesses the ability to absorb knowledge and instantly replicate combat skills of anyone he observes. - Marvel Comics
+                    </TextBlock>
+                    <TextBlock Margin="0,10,0,0"
+                               Style="{StaticResource AboutTextBlockStyle}">
+                        This software is intended for personal task management. It comes without any guarantee. Nobody will be considered responsible for any data loss or malfunction.
+                    </TextBlock>
+                    <TextBlock Margin="0,10,0,0"
+                               Style="{StaticResource AboutTextBlockStyle}" Text="It is licensed under GNU General Public License v3: http://www.gnu.org/licenses/gpl.html"/>
+                    <TextBlock Margin="0,10,0,0"
+                               Style="{StaticResource AboutTextBlockStyle}">
+                        https://github.com/ImanolPinto/TaskMaster
+                    </TextBlock>
+                    <Image Source="Images/copyleft.png" Height="100" Margin="0,40,0,0" />
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+    </Border>
+</Window>
