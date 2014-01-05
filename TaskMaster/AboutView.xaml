@@ -27,7 +27,7 @@
         <Grid>
             <Image Source="Images/exit.png" Height="20" ToolTip="Exit" MouseDown="Exit_MouseDown" Cursor="Hand" Margin="15" VerticalAlignment="Top" HorizontalAlignment="Right"/>
             <DockPanel Margin="30">
-                <Image Source="Images/taskmaster_by_the_hand.jpg" Width="440" DockPanel.Dock="Left"/>
+                <Image Source="Images/taskmaster_by_the_hand.jpg" Width="424" DockPanel.Dock="Left"/>
                 <StackPanel Margin="20,0,10,10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label FontWeight="Bold" FontSize="25">TaskMaster</Label>
