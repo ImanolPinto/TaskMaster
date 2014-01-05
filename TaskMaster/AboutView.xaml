@@ -45,7 +45,10 @@
                                Style="{StaticResource AboutTextBlockStyle}">
                         https://github.com/ImanolPinto/TaskMaster
                     </TextBlock>
-                    <Image Source="Images/copyleft.png" Height="100" Margin="0,40,0,0" />
+                    <StackPanel Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Center">
+                        <Image Source="Images/logo.png" Width="80"  />
+                        <Image Source="Images/copyleft.png" Height="100" Margin="5,0,0,0" />
+                    </StackPanel>
                 </StackPanel>
             </DockPanel>
         </Grid>

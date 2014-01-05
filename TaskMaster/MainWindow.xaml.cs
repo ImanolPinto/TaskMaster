@@ -84,7 +84,7 @@ namespace TaskMaster
             this.WindowState = System.Windows.WindowState.Minimized;
         }
 
-        private void TextBlock_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void About_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             AboutView about = new AboutView();
             about.ShowDialog();
