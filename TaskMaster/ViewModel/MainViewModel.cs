@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Windows;
 using TaskMaster.Model;
 using System.Linq;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace TaskMaster.ViewModel
 {
@@ -31,6 +32,8 @@ namespace TaskMaster.ViewModel
         public RelayCommand PauseTaskItemCmd { get; private set; }
         public RelayCommand AddNewTaskItemCmd { get; private set; }
         public RelayCommand<Guid> ArchiveTaskItemCmd { get; private set; }
+
+        public RelayCommand OpenPlayedTimesSummaryCmd { get; private set; }
 
         #endregion
 
@@ -145,6 +148,8 @@ namespace TaskMaster.ViewModel
             AddNewTaskItemCmd = new RelayCommand(AddNewTaskItem, CanAddNewTaskItem);
             ArchiveTaskItemCmd = new RelayCommand<Guid>(ArchiveTaskItem, CanArchiveTaskItem);
 
+            OpenPlayedTimesSummaryCmd = new RelayCommand(OpenPlayedTimesSummary);
+
             var bgWorker = new BgWorkerBuilder(PopulateUnarchivedTasks).Build();
             bgWorker.RunWorkerAsync();
         }
@@ -230,6 +235,12 @@ namespace TaskMaster.ViewModel
         private bool CanArchiveTaskItem(Guid taskId)
         {
             return ActiveTaskList != null && ActiveTaskList.FirstOrDefault(x => x.Id == taskId) != null;
+        }
+
+        private void OpenPlayedTimesSummary()
+        {
+            var listToSummarize = _activeTaskList.ToList();
+            Messenger.Default.Send<OpenPlayedTimesSummaryMsg>(new OpenPlayedTimesSummaryMsg(listToSummarize));
         }
 
         private void ClearAllTheStatesExceptForTheTask(TaskItem task)

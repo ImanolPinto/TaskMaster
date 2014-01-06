@@ -89,6 +89,7 @@
     <Compile Include="Model\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\PausedToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\PlayingToVisibilityConverter.cs" />
+    <Compile Include="Model\Messages\OpenPlayedTimesSummaryMsg.cs" />
     <Compile Include="Model\PlaySession.cs" />
     <Compile Include="Model\DataServices\ArchiveTaskResult.cs" />
     <Compile Include="Model\DataServices\ITaskListDataService.cs" />
@@ -101,7 +102,11 @@
     <Compile Include="AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlayedTimesSummaryView.xaml.cs">
+      <DependentUpon>PlayedTimesSummaryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\PlayedTimesSummaryModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +122,10 @@
     </Compile>
     <Page Include="AboutView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlayedTimesSummaryView.xaml">
+      <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Skins\MainSkin.xaml">
@@ -194,6 +203,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\MainIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\clock.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

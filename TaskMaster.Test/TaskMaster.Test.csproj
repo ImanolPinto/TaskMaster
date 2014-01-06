@@ -59,6 +59,7 @@
     <Compile Include="MainViewModelTests\ConstructionTests.cs" />
     <Compile Include="ConvertersTests\PlayingToVisibilityConverterTests.cs" />
     <Compile Include="MainViewModelTests\MVMHelpers.cs" />
+    <Compile Include="MainViewModelTests\OpenDialogsTests.cs" />
     <Compile Include="MainViewModelTests\PauseCommandTests.cs" />
     <Compile Include="MainViewModelTests\PlayCommandTests.cs" />
     <Compile Include="PlaySessionTests.cs" />

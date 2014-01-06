@@ -107,6 +107,12 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
+                <StackPanel Grid.Column="2" Margin="0,30,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Button Style="{StaticResource TransparentButton}" ToolTip="Played time summary" Cursor="Hand"
+                            Command="{Binding OpenPlayedTimesSummaryCmd}">
+                        <Image Source="Images/clock.png" Height="33"/>
+                    </Button>
+                </StackPanel>
                 <Label Grid.Column="2" 
                        Content="Select a task to edit and play it" 
                        VerticalAlignment="Center" 
@@ -115,78 +121,75 @@
                 <Grid Grid.Column="2" 
                       Margin="0,63,30,0"
                       Visibility="{Binding Path=SelectedTask, Converter={StaticResource NullToVisibilityConverter}}">
-                        <Border
-                            Height="Auto"
-                            Margin="0,10,0,30"
-                            Style="{StaticResource BlueBorderStyle}">
-                            <DockPanel Margin="30">
-                                <ListView 
-                                        DockPanel.Dock="Top"
-                                        x:Name="ChooseATagListView"  
-                                        Style="{StaticResource TagListStyle}"
-                                        ItemsSource="{Binding AvailableTagList}"
-                                        SelectedItem="{Binding SelectedTag}">
-                                    <ListView.Resources>
-                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gold" />
-                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
-                                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Gold" />
-                                    </ListView.Resources>
-                                    <ListView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal"/>
-                                        </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border Style="{StaticResource TagBorderStyle}" Margin="1" Width="87">
-                                                <Label Content="{Binding}" FontSize="12"/>
-                                            </Border>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                                <Grid DockPanel.Dock="Top">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBox Grid.Column="0" 
-                                            Margin="0,5,0,0"
-                                            Text="{Binding SelectedTask.Tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    </TextBox>
-                                    <Button Grid.Column="1" Style="{StaticResource TransparentButton}" Cursor="Hand" ToolTip="Choose a tag" Click="ChooseATag_Click" Margin="5,0,0,0">
-                                        <Image Source="Images/tags.png" RenderOptions.BitmapScalingMode="Fant" Height="25"/>
-                                    </Button>
-                                </Grid>
-                                <TextBox 
-                                         Text="{Binding SelectedTask.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         Margin="0,5,0,0" 
-                                         AcceptsReturn="True"
-                                         TextWrapping="Wrap" 
-                                         ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                                         VerticalContentAlignment="Stretch"/>
-                            </DockPanel>
-                        </Border>
-                        <StackPanel Orientation="Horizontal">
-                            
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal"  
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Margin="0,0,20,0">
-                            <Button DockPanel.Dock="Right"
+                    <Border
+                        Height="Auto"
+                        Margin="0,10,0,30"
+                        Style="{StaticResource BlueBorderStyle}">
+                        <DockPanel Margin="30">
+                            <ListView 
+                                    DockPanel.Dock="Top"
+                                    x:Name="ChooseATagListView"  
+                                    Style="{StaticResource TagListStyle}"
+                                    ItemsSource="{Binding AvailableTagList}"
+                                    SelectedItem="{Binding SelectedTag}">
+                                <ListView.Resources>
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gold" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Gold" />
+                                </ListView.Resources>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource TagBorderStyle}" Margin="1" Width="87">
+                                            <Label Content="{Binding}" FontSize="12"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <Grid DockPanel.Dock="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" 
+                                        Margin="0,5,0,0"
+                                        Text="{Binding SelectedTask.Tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                </TextBox>
+                                <Button Grid.Column="1" Style="{StaticResource TransparentButton}" Cursor="Hand" ToolTip="Choose a tag" Click="ChooseATag_Click" Margin="5,0,0,0">
+                                    <Image Source="Images/tags.png" RenderOptions.BitmapScalingMode="Fant" Height="25"/>
+                                </Button>
+                            </Grid>
+                            <TextBox 
+                                        Text="{Binding SelectedTask.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="0,5,0,0" 
+                                        AcceptsReturn="True"
+                                        TextWrapping="Wrap" 
+                                        ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                        VerticalContentAlignment="Stretch"/>
+                        </DockPanel>
+                    </Border>
+                    <StackPanel Orientation="Horizontal"  
                                 HorizontalAlignment="Right"
-                                Width="Auto"
-                                Command="{Binding ArchiveTaskItemCmd}" 
-                                CommandParameter="{Binding Path=SelectedTask.Id}">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal" Margin="2,0,5,0">
-                                        <Image Source="Images/minus.png" Height="20" Margin="0,0,5,0"/>
-                                        <TextBlock Text="Archive this" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
+                                VerticalAlignment="Top"
+                                Margin="0,0,20,0">
+                        <Button DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Width="Auto"
+                            Command="{Binding ArchiveTaskItemCmd}" 
+                            CommandParameter="{Binding Path=SelectedTask.Id}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" Margin="2,0,5,0">
+                                    <Image Source="Images/minus.png" Height="20" Margin="0,0,5,0"/>
+                                    <TextBlock Text="Archive this" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Border>
         <StackPanel Grid.Column="0" 

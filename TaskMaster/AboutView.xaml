@@ -14,16 +14,9 @@
         WindowStyle="None"
         Background="Transparent">
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/MainSkin.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="Skins/MainSkin.xaml" />
     </Window.Resources>
-    <Border CornerRadius="30" BorderBrush="WhiteSmoke" BorderThickness="4">
-        <Border.Background>
-            <ImageBrush ImageSource="Images/mainWindowBack.jpg" RenderOptions.BitmapScalingMode="LowQuality"/>
-        </Border.Background>
+    <Border Style="{StaticResource DialogBorderStyle}">
         <Grid>
             <Image Source="Images/exit.png" Height="20" ToolTip="Exit" MouseDown="Exit_MouseDown" Cursor="Hand" Margin="15" VerticalAlignment="Top" HorizontalAlignment="Right"/>
             <DockPanel Margin="30">

@@ -126,4 +126,15 @@
         <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
+
+    <Style x:Key="DialogBorderStyle" TargetType="Border">
+        <Setter Property="CornerRadius" Value="30"/>
+        <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+        <Setter Property="BorderThickness" Value="4"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="../Images/mainWindowBack.jpg" RenderOptions.BitmapScalingMode="LowQuality"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

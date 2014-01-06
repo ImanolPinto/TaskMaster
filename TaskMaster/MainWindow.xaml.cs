@@ -3,6 +3,7 @@ using System.Windows.Input;
 using TaskMaster.Model;
 using TaskMaster.ViewModel;
 using WPF.JoshSmith.ServiceProviders.UI;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace TaskMaster
 {
@@ -20,6 +21,16 @@ namespace TaskMaster
         {
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
+            Messenger.Default.Register<OpenPlayedTimesSummaryMsg>(this, OpenPlayedTimesSummaryMsgReceivedAction);
+        }
+
+        private void OpenPlayedTimesSummaryMsgReceivedAction(OpenPlayedTimesSummaryMsg msg)
+        {
+            if (msg == null)
+                return;
+
+            var playedSummaryView = new PlayedTimesSummaryView();
+            playedSummaryView.ShowDialog();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
