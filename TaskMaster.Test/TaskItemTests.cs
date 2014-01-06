@@ -179,10 +179,10 @@ namespace TaskMaster.Test
             );
 
             // When
-            taskItem.RefreshCurrentPlayedTimeForDay(todayDate);
+            var playedTime = taskItem.GetPlayedTimeForDay(todayDate);
 
             // Then
-            Assert.IsTrue(taskItem.CurrentSessionPlayedTime == new TimeSpan(1, 0, 5));
+            Assert.IsTrue(playedTime == new TimeSpan(1, 0, 5));
         }
     }
 }

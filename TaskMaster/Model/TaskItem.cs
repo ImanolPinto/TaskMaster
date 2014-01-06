@@ -18,7 +18,6 @@ namespace TaskMaster.Model
 
         private ObservableCollection<PlaySession> _playSessions;
         private PlaySession _currentPlaySession;
-        private TimeSpan _currentSessionPlayedTime;
 
         public Guid Id
         {
@@ -92,14 +91,6 @@ namespace TaskMaster.Model
             }
         }
 
-        public TimeSpan CurrentSessionPlayedTime
-        {
-            get
-            {
-                return _currentSessionPlayedTime;
-            }
-        }
-
         public TaskItem(Guid id, string description)
         {
             _id = id;
@@ -126,7 +117,6 @@ namespace TaskMaster.Model
         {
             _currentPlaySession.PlayedTime += time;
             RefreshTotalPlayedTime();
-            RefreshCurrentPlayedTimeForDay(_currentPlaySession.Date);
         }
 
         public bool ThereIsAPlayedSessionThatDay(DateTime date)
@@ -161,11 +151,9 @@ namespace TaskMaster.Model
             _playSessions = new ObservableCollection<PlaySession>(playSessions);
         }
 
-        public void RefreshCurrentPlayedTimeForDay(DateTime date)
+        public TimeSpan GetPlayedTimeForDay(DateTime date)
         {
-            var playSession = GetPlaySessionForDay(date);
-            _currentSessionPlayedTime = playSession.PlayedTime;
-            RaisePropertyChanged("CurrentSessionPlayedTime");
+            return GetPlaySessionForDay(date).PlayedTime;
         }
 
         public void RefreshTotalPlayedTime()
