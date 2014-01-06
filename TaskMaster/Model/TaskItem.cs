@@ -87,6 +87,7 @@ namespace TaskMaster.Model
         {
             get
             {
+                RefreshTotalPlayedTime();
                 return _totalPlayedTime;
             }
         }
@@ -109,14 +110,11 @@ namespace TaskMaster.Model
                 _currentPlaySession = new PlaySession(date);
                 _playSessions.Add(_currentPlaySession);
             }
-
-            RefreshTotalPlayedTime();
         }
 
         public void AddTimeTick(TimeSpan time)
         {
             _currentPlaySession.PlayedTime += time;
-            RefreshTotalPlayedTime();
         }
 
         public bool ThereIsAPlayedSessionThatDay(DateTime date)
@@ -156,14 +154,13 @@ namespace TaskMaster.Model
             return GetPlaySessionForDay(date).PlayedTime;
         }
 
-        public void RefreshTotalPlayedTime()
+        private void RefreshTotalPlayedTime()
         {
             _totalPlayedTime = new TimeSpan(0);
             if (_playSessions == null)
                 return;
 
             _playSessions.ToList().ForEach(x => _totalPlayedTime += x.PlayedTime);
-            RaisePropertyChanged("TotalPlayedTime");
         }
 
         private bool AllPlaySessionsHaveDifferentDates(List<PlaySession> playSessions)

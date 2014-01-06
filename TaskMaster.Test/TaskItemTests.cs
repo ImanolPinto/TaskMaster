@@ -144,10 +144,10 @@ namespace TaskMaster.Test
             );
 
             // When
-            taskItem.RefreshTotalPlayedTime();
+            var totalTime = taskItem.TotalPlayedTime;
 
             // Then
-            Assert.IsTrue(taskItem.TotalPlayedTime == new TimeSpan(3, 3, 9));
+            Assert.IsTrue(totalTime == new TimeSpan(3, 3, 9));
         }
 
         [Test]
@@ -158,10 +158,10 @@ namespace TaskMaster.Test
             taskItem.LoadPlaySessions(null);
 
             // When
-            taskItem.RefreshTotalPlayedTime();
+            var totalTime = taskItem.TotalPlayedTime;
 
             // Then
-            Assert.IsTrue(taskItem.TotalPlayedTime == new TimeSpan(0));
+            Assert.IsTrue(totalTime == new TimeSpan(0));
         }
 
         [Test]
