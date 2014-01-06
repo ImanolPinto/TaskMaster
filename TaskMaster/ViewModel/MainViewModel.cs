@@ -8,6 +8,7 @@ using System.Windows;
 using TaskMaster.Model;
 using System.Linq;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Practices.ServiceLocation;
 
 namespace TaskMaster.ViewModel
 {

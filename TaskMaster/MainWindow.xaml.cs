@@ -1,9 +1,9 @@
-﻿using System.Windows;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System.Windows;
 using System.Windows.Input;
 using TaskMaster.Model;
 using TaskMaster.ViewModel;
 using WPF.JoshSmith.ServiceProviders.UI;
-using GalaSoft.MvvmLight.Messaging;
 
 namespace TaskMaster
 {

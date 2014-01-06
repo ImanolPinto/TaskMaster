@@ -42,6 +42,10 @@ namespace TaskMaster.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<PlayedTimesSummaryModel>();
+
+            // Register for messages sent before the view binds the model
+            var playedTimesSummaryModel = SimpleIoc.Default.GetInstance<PlayedTimesSummaryModel>();
+            playedTimesSummaryModel.RegisterForMessagesBeforeView();
         }
 
         /// <summary>

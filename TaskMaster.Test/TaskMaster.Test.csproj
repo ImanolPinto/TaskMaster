@@ -35,6 +35,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Librerias\GalaSoft.MvvmLight.WPF4.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=59d6d24383174ac4, processorArchitecture=MSIL" />
     <Reference Include="Moq">
       <HintPath>..\Librerias\Moq.dll</HintPath>
     </Reference>
@@ -62,6 +63,7 @@
     <Compile Include="MainViewModelTests\OpenDialogsTests.cs" />
     <Compile Include="MainViewModelTests\PauseCommandTests.cs" />
     <Compile Include="MainViewModelTests\PlayCommandTests.cs" />
+    <Compile Include="PlayedTimesSummaryModelTests.cs" />
     <Compile Include="PlaySessionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskItemTests.cs" />
