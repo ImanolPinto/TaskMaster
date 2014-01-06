@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Messaging;
 using TaskMaster.Model;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace TaskMaster.ViewModel
 {
@@ -13,30 +14,63 @@ namespace TaskMaster.ViewModel
     /// </summary>
     public class PlayedTimesSummaryModel : ViewModelBase
     {
+        ITimeProvider _timeProvider;
+
         private List<TaskItem> _taskList;
         public List<TaskItem> TaskList
         {
             get { return _taskList; }
         }
 
+        private ObservableCollection<TimeItem> _timeListItems;
+        public ObservableCollection<TimeItem> TimeListItems
+        {
+            get { return _timeListItems; }
+            set 
+            {
+                if (value == _timeListItems)
+                    return;
 
+                TimeListItems = value;
+                RaisePropertyChanged("TimeListItems");
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the PlayedTimesSummaryModel class.
         /// </summary>
-        public PlayedTimesSummaryModel()
+        public PlayedTimesSummaryModel(ITimeProvider timeProvider)
         {
-            
+            _timeProvider = timeProvider;
         }
 
         public void RegisterForMessagesBeforeView()
         {
-            Messenger.Default.Register<OpenPlayedTimesSummaryMsg>(this, x => SetTaskList(x.TaskItems));
+            Messenger.Default.Register<OpenPlayedTimesSummaryMsg>(this, x => OpenPlayedTimesSummaryMsgReceived(x));
+        }
+
+        private void OpenPlayedTimesSummaryMsgReceived(OpenPlayedTimesSummaryMsg msg)
+        {
+            if (msg.TaskItems == null)
+                return;
+
+            SetTaskList(msg.TaskItems);
         }
 
         public void SetTaskList(List<TaskItem> taskList)
         {
+            if (taskList == null)
+                return;
+
             _taskList = taskList;
+            _timeListItems = new ObservableCollection<TimeItem>();
+            _taskList.ForEach(x => AddTimeListItemFromTask(x));
+        }
+
+        private void AddTimeListItemFromTask(TaskItem taskItem)
+        {
+            _timeListItems.Add(new TimeItem(taskItem.GetPlayedTimeForDay(_timeProvider.Now()), taskItem.Tag, taskItem.Description));
+            TimeListItems = _timeListItems;
         }
     }
 }

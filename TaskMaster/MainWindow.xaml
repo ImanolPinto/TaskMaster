@@ -74,7 +74,7 @@
                             ItemsSource="{Binding ActiveTaskList}" 
                             SelectedItem="{Binding SelectedTask}"
                             SelectionMode="Single"
-                            Style="{StaticResource TaskListStyle}"
+                            Style="{StaticResource VerticalTransparentListStyle}"
                             SelectionChanged="TaskListView_SelectionChanged">
                         <ListView.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gold" />
@@ -129,7 +129,7 @@
                             <ListView 
                                     DockPanel.Dock="Top"
                                     x:Name="ChooseATagListView"  
-                                    Style="{StaticResource TagListStyle}"
+                                    Style="{StaticResource VerticalTransparentListStyle}"
                                     ItemsSource="{Binding AvailableTagList}"
                                     SelectedItem="{Binding SelectedTag}">
                                 <ListView.Resources>

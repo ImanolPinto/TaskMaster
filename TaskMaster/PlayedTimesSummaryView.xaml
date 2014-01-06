@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        Width="900"
-        Height="600"
+        Width="600"
+        Height="400"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -24,7 +24,35 @@
     </Window.Resources>
     <Border Style="{StaticResource DialogBorderStyle}">
         <Grid>
-            <Image Source="Images/exit.png" Height="20" ToolTip="Exit" MouseDown="Exit_MouseDown" Cursor="Hand" Margin="15" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <DockPanel>
+                <Image DockPanel.Dock="Top" Source="Images/exit.png" Height="20" 
+                       ToolTip="Exit" 
+                       MouseDown="Exit_MouseDown" Cursor="Hand" Margin="15" 
+                       VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                <ListView Margin="30,0" Style="{StaticResource VerticalTransparentListStyle}"
+                          ItemsSource="{Binding TimeListItems}">
+                    <ListView.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gold" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Gold" />
+                    </ListView.Resources>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Style="{StaticResource TransparentTextBoxStyle}" 
+                                     Text="{Binding Time}"/>
+                            <TextBox Grid.Column="1" Style="{StaticResource TransparentTextBoxStyle}" 
+                                     Text="{Binding Tag}"/>
+                            <TextBox Grid.Column="2" Style="{StaticResource TransparentTextBoxStyle}" 
+                                     Text="{Binding Description}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView>
+            </DockPanel>
         </Grid>
     </Border>
 </Window>

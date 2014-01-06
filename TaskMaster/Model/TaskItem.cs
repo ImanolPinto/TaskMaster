@@ -124,6 +124,9 @@ namespace TaskMaster.Model
 
         public PlaySession GetPlaySessionForDay(DateTime date)
         {
+            if (_playSessions == null || date == null)
+                return null;
+
             return _playSessions.Where(x => DateTimesInSameDay(x.Date, date)).FirstOrDefault();
         }
 
@@ -151,7 +154,11 @@ namespace TaskMaster.Model
 
         public TimeSpan GetPlayedTimeForDay(DateTime date)
         {
-            return GetPlaySessionForDay(date).PlayedTime;
+            var playedSession = GetPlaySessionForDay(date);
+            if (playedSession == null)
+                return new TimeSpan(0);
+
+            return playedSession.PlayedTime;
         }
 
         private void RefreshTotalPlayedTime()
