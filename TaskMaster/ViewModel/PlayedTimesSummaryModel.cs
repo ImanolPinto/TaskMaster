@@ -37,6 +37,16 @@ namespace TaskMaster.ViewModel
         public PlayedTimesSummaryModel(ITimeProvider timeProvider)
         {
             _timeProvider = timeProvider;
+
+            if (IsInDesignMode)
+            {
+                _timeListItems = new ObservableCollection<TimeItem>()
+                {
+                    new TimeItem(new TimeSpan(1, 3, 1), "TimeItem tag 1", "Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"),
+                    new TimeItem(new TimeSpan(0, 59, 0), "TimeItem tag 2", "Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla")
+                };
+                TimeListItems = _timeListItems;
+            }
         }
 
         public void RegisterForMessagesBeforeView()
@@ -65,7 +75,11 @@ namespace TaskMaster.ViewModel
 
         private void AddTimeListItemFromTask(TaskItem taskItem, ObservableCollection<TimeItem> timeListItems)
         {
-            timeListItems.Add(new TimeItem(taskItem.GetPlayedTimeForDay(_timeProvider.Now()), taskItem.Tag, taskItem.Description));
+            var timeForDay = taskItem.GetPlayedTimeForDay(_timeProvider.Now());
+            if (timeForDay < new TimeSpan(0, 1, 0))
+                return;
+
+            timeListItems.Add(new TimeItem(timeForDay, taskItem.Tag, taskItem.Description));
         }
     }
 }

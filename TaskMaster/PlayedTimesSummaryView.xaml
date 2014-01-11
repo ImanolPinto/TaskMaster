@@ -29,28 +29,39 @@
                        ToolTip="Exit" 
                        MouseDown="Exit_MouseDown" Cursor="Hand" Margin="15" 
                        VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                <ListView Margin="30,0" Style="{StaticResource VerticalTransparentListStyle}"
+                <ListView Margin="30,0,30,30" 
+                          Style="{StaticResource VerticalTransparentListStyle}"
                           ItemsSource="{Binding TimeListItems}">
                     <ListView.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gold" />
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
-                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Gold" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Transparent" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
                     </ListView.Resources>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10*"/>
-                                <ColumnDefinition Width="20*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" Style="{StaticResource TransparentTextBoxStyle}" 
-                                     Text="{Binding Time}"/>
-                            <TextBox Grid.Column="1" Style="{StaticResource TransparentTextBoxStyle}" 
-                                     Text="{Binding Tag}"/>
-                            <TextBox Grid.Column="2" Style="{StaticResource TransparentTextBoxStyle}" 
-                                     Text="{Binding Description}"/>
-                        </Grid>
-                    </DataTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="WhiteSmoke" 
+                                    BorderThickness="0 0 0 1" 
+                                    CornerRadius="0 0 0 20"
+                                    Margin="0,0,0,5">
+                                <Grid Margin="5,2,0,0"
+                                      Height="40">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Style="{StaticResource TimeListItemStyle}" 
+                                             Text="{Binding Time, Mode=OneTime}"/>
+                                    <TextBox Grid.Column="1" Style="{StaticResource TimeListItemStyle}" 
+                                             Text="{Binding Tag, Mode=OneTime}"/>
+                                    <TextBox Grid.Column="2" Style="{StaticResource TimeListItemStyle}" 
+                                             Text="{Binding Description, Mode=OneTime}"
+                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                             ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </DockPanel>
         </Grid>

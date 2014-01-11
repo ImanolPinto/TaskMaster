@@ -44,7 +44,7 @@ namespace TaskMaster.ViewModel
             SimpleIoc.Default.Register<PlayedTimesSummaryModel>();
 
             // Register for messages sent before the view binds the model
-            var playedTimesSummaryModel = SimpleIoc.Default.GetInstance<PlayedTimesSummaryModel>();
+            var playedTimesSummaryModel = ServiceLocator.Current.GetInstance<PlayedTimesSummaryModel>();
             playedTimesSummaryModel.RegisterForMessagesBeforeView();
         }
 
@@ -68,7 +68,7 @@ namespace TaskMaster.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public PlayedTimesSummaryModel PlayedTimesSummary
+        public PlayedTimesSummaryModel PlayedTimesSummaryModel
         {
             get
             {
