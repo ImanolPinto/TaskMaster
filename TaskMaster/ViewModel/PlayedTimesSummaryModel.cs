@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using TaskMaster.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System;
 
 namespace TaskMaster.ViewModel
 {
@@ -15,12 +16,6 @@ namespace TaskMaster.ViewModel
     public class PlayedTimesSummaryModel : ViewModelBase
     {
         ITimeProvider _timeProvider;
-
-        private List<TaskItem> _taskList;
-        public List<TaskItem> TaskList
-        {
-            get { return _taskList; }
-        }
 
         private ObservableCollection<TimeItem> _timeListItems;
         public ObservableCollection<TimeItem> TimeListItems
@@ -54,23 +49,23 @@ namespace TaskMaster.ViewModel
             if (msg.TaskItems == null)
                 return;
 
-            SetTaskList(msg.TaskItems);
+            SetTimeListFromTaskList(msg.TaskItems);
         }
 
-        public void SetTaskList(List<TaskItem> taskList)
+        private void SetTimeListFromTaskList(List<TaskItem> taskList)
         {
             if (taskList == null)
                 return;
 
-            _taskList = taskList;
             _timeListItems = new ObservableCollection<TimeItem>();
-            _taskList.ForEach(x => AddTimeListItemFromTask(x));
+            taskList.ForEach(x => AddTimeListItemFromTask(x, _timeListItems));
+
+            TimeListItems = _timeListItems;
         }
 
-        private void AddTimeListItemFromTask(TaskItem taskItem)
+        private void AddTimeListItemFromTask(TaskItem taskItem, ObservableCollection<TimeItem> timeListItems)
         {
-            _timeListItems.Add(new TimeItem(taskItem.GetPlayedTimeForDay(_timeProvider.Now()), taskItem.Tag, taskItem.Description));
-            TimeListItems = _timeListItems;
+            timeListItems.Add(new TimeItem(taskItem.GetPlayedTimeForDay(_timeProvider.Now()), taskItem.Tag, taskItem.Description));
         }
     }
 }
