@@ -50,10 +50,19 @@
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox Grid.Column="0" Style="{StaticResource TimeListItemStyle}" 
-                                             Text="{Binding Time, Mode=OneTime}"/>
+                                    <TextBox Grid.Column="0" 
+                                             Style="{StaticResource TimeListItemStyle}"
+                                             Margin="0,0,5,0">
+                                        <TextBox.Text>
+                                            <MultiBinding StringFormat="{}{0:D2}:{1:D2}" Mode="OneTime">
+                                                <Binding Path="Time.Hours"/>
+                                                <Binding Path="Time.Minutes"/>
+                                            </MultiBinding>
+                                        </TextBox.Text>
+                                    </TextBox>
                                     <TextBox Grid.Column="1" Style="{StaticResource TimeListItemStyle}" 
-                                             Text="{Binding Tag, Mode=OneTime}"/>
+                                             Text="{Binding Tag, Mode=OneTime}"
+                                             Margin="0,0,5,0"/>
                                     <TextBox Grid.Column="2" Style="{StaticResource TimeListItemStyle}" 
                                              Text="{Binding Description, Mode=OneTime}"
                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
