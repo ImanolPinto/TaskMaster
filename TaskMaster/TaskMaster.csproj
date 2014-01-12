@@ -100,16 +100,16 @@
     <Compile Include="Model\TaskPlayer.cs" />
     <Compile Include="Model\TimeItem.cs" />
     <Compile Include="Model\TimeProvider.cs" />
-    <Compile Include="AboutView.xaml.cs">
+    <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlayedTimesSummaryView.xaml.cs">
+    <Compile Include="Views\PlayedTimesSummaryView.xaml.cs">
       <DependentUpon>PlayedTimesSummaryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PlayedTimesSummaryModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -117,19 +117,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="AboutView.xaml">
+    <Page Include="Views\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlayedTimesSummaryView.xaml">
+    <Page Include="Views\PlayedTimesSummaryView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Skins\MainSkin.xaml">
+    <Page Include="Views\Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -160,53 +160,56 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\mainWindowBack.jpg" />
+    <Resource Include="Views\Images\mainWindowBack.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\pause.png" />
-    <Resource Include="Images\play.png" />
-    <Resource Include="Images\stop.png" />
+    <Resource Include="Views\Images\pause.png" />
+    <Resource Include="Views\Images\play.png" />
+    <Resource Include="Views\Images\stop.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\finished.png" />
+    <Resource Include="Views\Images\finished.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\minus.png" />
-    <Resource Include="Images\plus.png" />
+    <Resource Include="Views\Images\minus.png" />
+    <Resource Include="Views\Images\plus.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\tags.png" />
+    <Resource Include="Views\Images\tags.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\folder.png" />
+    <Resource Include="Views\Images\folder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\exit.png" />
+    <Resource Include="Views\Images\exit.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\maximize.png" />
-    <Resource Include="Images\minimize.png" />
+    <Resource Include="Views\Images\maximize.png" />
+    <Resource Include="Views\Images\minimize.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\restore.png" />
+    <Resource Include="Views\Images\restore.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\taskmaster_by_the_hand.jpg" />
+    <Resource Include="Views\Images\taskmaster_by_the_hand.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\copyleft.png" />
+    <Resource Include="Views\Images\copyleft.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\logo.png" />
+    <Resource Include="Views\Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\MainIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Images\MainIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Images\clock.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="MainIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\MainIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\clock.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

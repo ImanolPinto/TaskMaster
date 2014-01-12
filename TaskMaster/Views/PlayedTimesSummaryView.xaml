@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        Width="600"
-        Height="400"
+        Width="650"
+        Height="450"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -29,6 +29,12 @@
                        ToolTip="Exit" 
                        MouseDown="Exit_MouseDown" Cursor="Hand" Margin="15" 
                        VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                <DatePicker DockPanel.Dock="Top" 
+                            Width="100" 
+                            HorizontalAlignment="Right" 
+                            Margin="0,0,23,5"
+                            BorderThickness="0"
+                            SelectedDate="{Binding TargetDate}"/>
                 <ListView Margin="30,0,30,30" 
                           Style="{StaticResource VerticalTransparentListStyle}"
                           ItemsSource="{Binding TimeListItems}">
@@ -43,7 +49,7 @@
                                     BorderThickness="0 0 0 1" 
                                     CornerRadius="0 0 0 20"
                                     Margin="0,0,0,5">
-                                <Grid Margin="5,2,0,0"
+                                <Grid Margin="10,0,0,0"
                                       Height="40">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>

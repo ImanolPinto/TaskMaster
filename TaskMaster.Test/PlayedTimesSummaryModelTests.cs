@@ -62,6 +62,20 @@ namespace TaskMaster.Test
             Assert.IsTrue(sut.TimeListItems.Count == 0);
         }
 
+        [Test]
+        public void When_the_target_date_changes_then_the_task_item_list_is_refreshed_for_that_date()
+        {
+            // Given
+            var initialTargetDate = new DateTime(2000, 1, 1);
+            var newTargetDate = new DateTime(2014, 1, 1);
+            var sut = SutWithTimeProviderReturningATargetDate(initialTargetDate);
+
+            // When
+            sut.TargetDate = newTargetDate;
+
+            // Then
+
+        }
 
         #region Helpers
 

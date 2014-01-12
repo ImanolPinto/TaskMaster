@@ -237,7 +237,7 @@
                 </Button.Content>
             </Button>
         </StackPanel>
-        <Image  Source="/Images/logo.png"
+        <Image  Source="Images/logo.png"
                 Grid.Column="1" 
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left" 

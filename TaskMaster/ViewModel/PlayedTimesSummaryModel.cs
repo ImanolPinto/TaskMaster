@@ -17,6 +17,20 @@ namespace TaskMaster.ViewModel
     {
         ITimeProvider _timeProvider;
 
+        private DateTime _targetDate;
+        public DateTime TargetDate
+        {
+            get { return _targetDate; }
+            set
+            {
+                if (_targetDate == value)
+                    return;
+
+                _targetDate = value;
+                RaisePropertyChanged("TargetDate");
+            }
+        }
+
         private ObservableCollection<TimeItem> _timeListItems;
         public ObservableCollection<TimeItem> TimeListItems
         {
@@ -46,6 +60,7 @@ namespace TaskMaster.ViewModel
                     new TimeItem(new TimeSpan(0, 59, 0), "TimeItem tag 2", "Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla")
                 };
                 TimeListItems = _timeListItems;
+                TargetDate = _timeProvider.Now();
             }
         }
 
@@ -59,6 +74,7 @@ namespace TaskMaster.ViewModel
             if (msg.TaskItems == null)
                 return;
 
+            TargetDate = _timeProvider.Now();
             SetTimeListFromTaskList(msg.TaskItems);
         }
 
@@ -68,14 +84,14 @@ namespace TaskMaster.ViewModel
                 return;
 
             _timeListItems = new ObservableCollection<TimeItem>();
-            taskList.ForEach(x => AddTimeListItemFromTask(x, _timeListItems));
+            taskList.ForEach(x => AddTimeListItemFromTask(x, _timeListItems, _targetDate));
 
             TimeListItems = _timeListItems;
         }
 
-        private void AddTimeListItemFromTask(TaskItem taskItem, ObservableCollection<TimeItem> timeListItems)
+        private void AddTimeListItemFromTask(TaskItem taskItem, ObservableCollection<TimeItem> timeListItems, DateTime targetDate)
         {
-            var timeForDay = taskItem.GetPlayedTimeForDay(_timeProvider.Now());
+            var timeForDay = taskItem.GetPlayedTimeForDay(targetDate);
             if (timeForDay < new TimeSpan(0, 1, 0))
                 return;
 
