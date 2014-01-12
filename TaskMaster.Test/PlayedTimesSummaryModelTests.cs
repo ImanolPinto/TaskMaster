@@ -36,7 +36,7 @@ namespace TaskMaster.Test
             var targetDate = new DateTime(1000, 2, 15);
             var otherDate = new DateTime(1000, 2, 14);
             var sut = SutWithTimeProviderReturningATargetDate(targetDate);
-            var taskItemList = TaskItemListWithTasksPlayedTheSameTargetDate(targetDate, otherDate);
+            var taskItemList = TaskItemListWithTasksPlayedAtDates(targetDate, otherDate);
             sut.RegisterForMessagesBeforeView();
 
             // When
@@ -69,12 +69,13 @@ namespace TaskMaster.Test
             var initialTargetDate = new DateTime(2000, 1, 1);
             var newTargetDate = new DateTime(2014, 1, 1);
             var sut = SutWithTimeProviderReturningATargetDate(initialTargetDate);
+            sut.SetTaskList(TaskItemListWithTasksPlayedAtDates(initialTargetDate, newTargetDate));
 
             // When
             sut.TargetDate = newTargetDate;
 
             // Then
-
+            Assert.IsTrue(sut.TimeListItems.Count == 1);
         }
 
         #region Helpers
@@ -87,7 +88,7 @@ namespace TaskMaster.Test
             return sut;
         }
 
-        private static List<TaskItem> TaskItemListWithTasksPlayedTheSameTargetDate(DateTime targetDate, DateTime otherDate)
+        private static List<TaskItem> TaskItemListWithTasksPlayedAtDates(DateTime targetDate, DateTime otherDate)
         {
             var playSessionList1 = new List<PlaySession>()
             {
@@ -110,7 +111,9 @@ namespace TaskMaster.Test
 
         private bool OnlyTasksItemsForTheTargetDateAreInTheTimeListItemList(List<TimeItem> timeItemList)
         {
-            return timeItemList.Count == 2
+            return 
+                timeItemList != null
+                && timeItemList.Count == 2
                 && timeItemList[0].Time == new TimeSpan(1, 3, 4)
                 && timeItemList[1].Time == new TimeSpan(3, 1, 1);
         }

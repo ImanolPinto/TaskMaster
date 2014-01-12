@@ -16,6 +16,7 @@ namespace TaskMaster.ViewModel
     public class PlayedTimesSummaryModel : ViewModelBase
     {
         ITimeProvider _timeProvider;
+        List<TaskItem> _taskList;
 
         private DateTime _targetDate;
         public DateTime TargetDate
@@ -27,6 +28,8 @@ namespace TaskMaster.ViewModel
                     return;
 
                 _targetDate = value;
+                SetTimeListFromTaskList();
+
                 RaisePropertyChanged("TargetDate");
             }
         }
@@ -74,17 +77,17 @@ namespace TaskMaster.ViewModel
             if (msg.TaskItems == null)
                 return;
 
+            _taskList = msg.TaskItems;
             TargetDate = _timeProvider.Now();
-            SetTimeListFromTaskList(msg.TaskItems);
         }
 
-        private void SetTimeListFromTaskList(List<TaskItem> taskList)
+        private void SetTimeListFromTaskList()
         {
-            if (taskList == null)
+            if (_taskList == null)
                 return;
 
             _timeListItems = new ObservableCollection<TimeItem>();
-            taskList.ForEach(x => AddTimeListItemFromTask(x, _timeListItems, _targetDate));
+            _taskList.ForEach(x => AddTimeListItemFromTask(x, _timeListItems, _targetDate));
 
             TimeListItems = _timeListItems;
         }
@@ -96,6 +99,15 @@ namespace TaskMaster.ViewModel
                 return;
 
             timeListItems.Add(new TimeItem(timeForDay, taskItem.Tag, taskItem.Description));
+        }
+
+        /// <summary>
+        /// Only for testing purposes
+        /// </summary>
+        /// <param name="taskList"></param>
+        public void SetTaskList(List<TaskItem> taskList)
+        {
+            _taskList = taskList;
         }
     }
 }
