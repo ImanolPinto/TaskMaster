@@ -24,14 +24,18 @@ namespace TaskMaster.ViewModel
             get { return _targetDate; }
             set
             {
-                if (_targetDate == value)
-                    return;
-
-                _targetDate = value;
-                SetTimeListFromTaskList();
-
-                RaisePropertyChanged("TargetDate");
+                SetTargetDate(value);
             }
+        }
+
+        private void SetTargetDate(DateTime value)
+        {
+            if (_targetDate == value)
+                return;
+
+            _targetDate = value;
+            SetTimeListFromTaskList();
+            RaisePropertyChanged("TargetDate");
         }
 
         private ObservableCollection<TimeItem> _timeListItems;
@@ -40,12 +44,17 @@ namespace TaskMaster.ViewModel
             get { return _timeListItems; }
             set 
             {
-                if (value == _timeListItems)
-                    return;
-
-                TimeListItems = value;
-                RaisePropertyChanged("TimeListItems");
+                SetTimeListItems(value);
             }
+        }
+
+        private void SetTimeListItems(ObservableCollection<TimeItem> value)
+        {
+            if (value == _timeListItems)
+                return;
+
+            _timeListItems = value;
+            RaisePropertyChanged("TimeListItems");
         }
 
         /// <summary>
@@ -57,13 +66,13 @@ namespace TaskMaster.ViewModel
 
             if (IsInDesignMode)
             {
-                _timeListItems = new ObservableCollection<TimeItem>()
+                var timeListItems = new ObservableCollection<TimeItem>()
                 {
                     new TimeItem(new TimeSpan(1, 3, 1), "TimeItem tag 1", "Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"),
                     new TimeItem(new TimeSpan(0, 59, 0), "TimeItem tag 2", "Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla Description bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla")
                 };
-                TimeListItems = _timeListItems;
-                TargetDate = _timeProvider.Now();
+                SetTimeListItems(timeListItems);
+                SetTargetDate(_timeProvider.Now());
             }
         }
 
@@ -78,7 +87,7 @@ namespace TaskMaster.ViewModel
                 return;
 
             _taskList = msg.TaskItems;
-            TargetDate = _timeProvider.Now();
+            SetTargetDate(_timeProvider.Now());
         }
 
         private void SetTimeListFromTaskList()
@@ -86,19 +95,19 @@ namespace TaskMaster.ViewModel
             if (_taskList == null)
                 return;
 
-            _timeListItems = new ObservableCollection<TimeItem>();
-            _taskList.ForEach(x => AddTimeListItemFromTask(x, _timeListItems, _targetDate));
-
-            TimeListItems = _timeListItems;
+            _taskList.ForEach(x => AddTimeListItemFromTask(x, _targetDate));
         }
 
-        private void AddTimeListItemFromTask(TaskItem taskItem, ObservableCollection<TimeItem> timeListItems, DateTime targetDate)
+        private void AddTimeListItemFromTask(TaskItem taskItem, DateTime targetDate)
         {
             var timeForDay = taskItem.GetPlayedTimeForDay(targetDate);
             if (timeForDay < new TimeSpan(0, 1, 0))
                 return;
 
-            timeListItems.Add(new TimeItem(timeForDay, taskItem.Tag, taskItem.Description));
+            if (_timeListItems == null)
+                SetTimeListItems(new ObservableCollection<TimeItem>());
+
+            TimeListItems.Add(new TimeItem(timeForDay, taskItem.Tag, taskItem.Description));
         }
 
         /// <summary>

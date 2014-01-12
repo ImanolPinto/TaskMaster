@@ -59,7 +59,7 @@ namespace TaskMaster.Test
             Messenger.Default.Send(new OpenPlayedTimesSummaryMsg(taskItemList));
 
             // Then
-            Assert.IsTrue(sut.TimeListItems.Count == 0);
+            Assert.IsTrue(sut.TimeListItems == null);
         }
 
         [Test]

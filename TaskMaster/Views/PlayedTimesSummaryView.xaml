@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
+        xmlns:converters="clr-namespace:TaskMaster.Model.Converters"
         mc:Ignorable="d ignore"
         Width="650"
         Height="450"
@@ -20,6 +21,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <Border Style="{StaticResource DialogBorderStyle}">
@@ -35,6 +37,14 @@
                             Margin="0,0,23,5"
                             BorderThickness="0"
                             SelectedDate="{Binding TargetDate}"/>
+                <Label 
+                    DockPanel.Dock="Top" 
+                    Margin="30"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding Path=TimeListItems, Converter={StaticResource NullToVisibilityConverter}}">
+                    No task has been played for more than one minute the selected date.
+                </Label>
                 <ListView Margin="30,0,30,30" 
                           Style="{StaticResource VerticalTransparentListStyle}"
                           ItemsSource="{Binding TimeListItems}">
