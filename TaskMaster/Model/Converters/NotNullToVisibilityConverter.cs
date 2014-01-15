@@ -11,7 +11,7 @@ namespace TaskMaster.Model.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value != null)
+            if (value == null)
                 return Visibility.Collapsed;
             else
                 return Visibility.Visible;

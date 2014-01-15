@@ -37,14 +37,6 @@
                             Margin="0,0,23,5"
                             BorderThickness="0"
                             SelectedDate="{Binding TargetDate}"/>
-                <Label 
-                    DockPanel.Dock="Top" 
-                    Margin="30"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Visibility="{Binding Path=TimeListItems, Converter={StaticResource NullToVisibilityConverter}}">
-                    No task has been played for more than one minute the selected date.
-                </Label>
                 <ListView Margin="30,0,30,30" 
                           Style="{StaticResource VerticalTransparentListStyle}"
                           ItemsSource="{Binding TimeListItems}">
@@ -89,6 +81,13 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </DockPanel>
+            <Label 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="30,0,30,30" 
+                    Visibility="{Binding Path=TimeListItems, Converter={StaticResource NullToVisibilityConverter}}">
+                No task has been played for more than one minute the selected date
+            </Label>
         </Grid>
     </Border>
 </Window>

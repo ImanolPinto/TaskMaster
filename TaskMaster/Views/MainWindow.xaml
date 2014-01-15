@@ -117,10 +117,10 @@
                        Content="Select a task to edit and play it" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Center"
-                       Visibility="{Binding Path=SelectedTask, Converter={StaticResource NotNullToVisibilityConverter}}"/>
+                       Visibility="{Binding Path=SelectedTask, Converter={StaticResource NullToVisibilityConverter}}"/>
                 <Grid Grid.Column="2" 
                       Margin="0,63,30,0"
-                      Visibility="{Binding Path=SelectedTask, Converter={StaticResource NullToVisibilityConverter}}">
+                      Visibility="{Binding Path=SelectedTask, Converter={StaticResource NotNullToVisibilityConverter}}">
                     <Border
                         Height="Auto"
                         Margin="0,10,0,30"
