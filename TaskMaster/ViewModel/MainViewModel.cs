@@ -35,6 +35,7 @@ namespace TaskMaster.ViewModel
         public RelayCommand<Guid> ArchiveTaskItemCmd { get; private set; }
 
         public RelayCommand OpenPlayedTimesSummaryCmd { get; private set; }
+        public RelayCommand OpenArchivedTasksViewCmd { get; private set; }
 
         #endregion
 
@@ -57,6 +58,22 @@ namespace TaskMaster.ViewModel
 
                 _activeTaskList = value;
                 RaisePropertyChanged("ActiveTaskList");
+            }
+        }
+
+        List<TaskItem> _archivedTaskList;
+        public List<TaskItem> ArchivedTaskList
+        {
+            get
+            {
+                return _archivedTaskList;
+            }
+            set
+            {
+                if (_archivedTaskList == value)
+                    return;
+
+                _archivedTaskList = value;
             }
         }
 
@@ -150,14 +167,19 @@ namespace TaskMaster.ViewModel
             ArchiveTaskItemCmd = new RelayCommand<Guid>(ArchiveTaskItem, CanArchiveTaskItem);
 
             OpenPlayedTimesSummaryCmd = new RelayCommand(OpenPlayedTimesSummary);
+            OpenArchivedTasksViewCmd = new RelayCommand(OpenArchivedTasksView, CanOpenArchivedTaskView);
 
-            var bgWorker = new BgWorkerBuilder(PopulateUnarchivedTasks).Build();
-            bgWorker.RunWorkerAsync();
+            var bgWorkerActiveTasks = new BgWorkerBuilder(PopulateActiveTasks).Build();
+            bgWorkerActiveTasks.RunWorkerAsync();
+
+            var bgWorkerArchivedTasks = new BgWorkerBuilder(PopulateArchivedTasks).Build();
+            bgWorkerArchivedTasks.RunWorkerAsync();
+
         }
 
-        private void PopulateUnarchivedTasks(object sender, DoWorkEventArgs e)
+        private void PopulateActiveTasks(object sender, DoWorkEventArgs e)
         {
-            var taskList = _taskListService.GetUnarchivedTasks();
+            var taskList = _taskListService.GetActiveTasks();
             if (taskList != null)
                 ActiveTaskList = new ObservableCollection<TaskItem>(taskList);
 
@@ -165,6 +187,11 @@ namespace TaskMaster.ViewModel
             {
                 SelectedTask = ActiveTaskList[0];
             }
+        }
+
+        private void PopulateArchivedTasks(object sender, DoWorkEventArgs e)
+        {
+            ArchivedTaskList = _taskListService.GetRecentArchivedTasks();
         }
 
         private bool CanPlayTaskItem()
@@ -242,6 +269,16 @@ namespace TaskMaster.ViewModel
         {
             var listToSummarize = _activeTaskList.ToList();
             Messenger.Default.Send<OpenPlayedTimesSummaryMsg>(new OpenPlayedTimesSummaryMsg(listToSummarize));
+        }
+
+        private void OpenArchivedTasksView()
+        {
+            Messenger.Default.Send<OpenArchivedTasksViewMsg>(new OpenArchivedTasksViewMsg(_archivedTaskList));
+        }
+
+        private bool CanOpenArchivedTaskView()
+        {
+            return ArchivedTaskList != null;
         }
 
         private void ClearAllTheStatesExceptForTheTask(TaskItem task)

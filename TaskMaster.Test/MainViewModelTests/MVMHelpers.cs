@@ -11,13 +11,23 @@ namespace TaskMaster.Test
     public static class MVMHelpers
     {
 
-        public static MainViewModel SutWithNullTaskList()
+        public static MainViewModel SutWithNullTaskLists()
         {
             var taskListServiceMock = new Mock<ITaskListDataService>();
             var taskPlayerMock = new Mock<ITaskPlayer>();
-            taskListServiceMock.Setup(x => x.GetUnarchivedTasks());
             var timeProviderMock = new Mock<ITimeProvider>();
             var mainViewModel = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
+            return mainViewModel;
+        }
+
+        public static MainViewModel SutWithArchivedTaskList()
+        {
+            var taskListServiceMock = new Mock<ITaskListDataService>();
+            var taskPlayerMock = new Mock<ITaskPlayer>();
+            var designDataService = new Design.DesignTaskListDataService();
+            var timeProviderMock = new Mock<ITimeProvider>();
+            var mainViewModel = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
+            mainViewModel.ArchivedTaskList = designDataService.GetRecentArchivedTasks();
             return mainViewModel;
         }
 
@@ -40,7 +50,7 @@ namespace TaskMaster.Test
                 new TaskItemBuilder(Guid.NewGuid()).Build()
             };
 
-            taskListServiceMock.Setup(x => x.GetUnarchivedTasks()).Returns(taskList);
+            taskListServiceMock.Setup(x => x.GetActiveTasks()).Returns(taskList);
 
             var timeProviderMock = new Mock<ITimeProvider>();
             timeProviderMock.Setup(x => x.Now()).Returns(DateTime.Now);
@@ -67,7 +77,7 @@ namespace TaskMaster.Test
                 new TaskItemBuilder(Guid.NewGuid()).Build()
             };
 
-            taskListServiceMock.Setup(x => x.GetUnarchivedTasks()).Returns(taskList);
+            taskListServiceMock.Setup(x => x.GetActiveTasks()).Returns(taskList);
 
             var timeProviderMock = new Mock<ITimeProvider>();
             timeProviderMock.Setup(x => x.Now()).Returns(playingDate);

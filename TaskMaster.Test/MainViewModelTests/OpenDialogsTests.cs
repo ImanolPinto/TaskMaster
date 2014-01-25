@@ -29,5 +29,30 @@ namespace TaskMaster.Test.MainViewModelTests
             // Then
             Assert.IsTrue(receivedList.Count == sut.ActiveTaskList.Count);
         }
+
+        [Test]
+        public void Given_a_non_empty_archived_task_list_when_OpenArchivedTaskCmd_is_handled_then_OpenArchivedTasksMsg_is_sent_with_the_archived_task_list()
+        {
+            // Given
+            List<TaskItem> receivedList = null;
+            Messenger.Default.Register<OpenArchivedTasksViewMsg>(this, x => { receivedList = x.TaskItems; });
+            var sut = MVMHelpers.SutWithArchivedTaskList();
+
+            // When
+            sut.OpenArchivedTasksViewCmd.Execute(null);
+
+            // Then
+            Assert.IsTrue(receivedList.Count == sut.ArchivedTaskList.Count);
+        }
+
+        [Test]
+        public void Given_an_empty_archived_task_list_then_OpenArchivedTaskCmd_cannot_be_handled()
+        {
+            // Given
+            var sut = MVMHelpers.SutWithNullTaskLists();
+
+            // When && Then
+            Assert.IsFalse(sut.OpenArchivedTasksViewCmd.CanExecute(null));
+        }
     }
 }

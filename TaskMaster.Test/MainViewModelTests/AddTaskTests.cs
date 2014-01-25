@@ -32,7 +32,7 @@ namespace TaskMaster.Test.MainViewModelTests
         public void Given_a_null_TaskList_When_the_AddTask_command_is_handled_then_the_task_list_is_null()
         {
             // Given
-            var sut = MVMHelpers.SutWithNullTaskList();
+            var sut = MVMHelpers.SutWithNullTaskLists();
 
             // When
             sut.AddNewTaskItemCmd.Execute(null);
@@ -45,7 +45,7 @@ namespace TaskMaster.Test.MainViewModelTests
         public void Given_an_empty_TaskList_When_the_AddTask_command_is_handled_then_the_task_list_count_is_1()
         {
             // Given
-            var sut = MVMHelpers.SutWithNullTaskList();
+            var sut = MVMHelpers.SutWithNullTaskLists();
             sut.ActiveTaskList = new ObservableCollection<TaskItem>();
 
             // When

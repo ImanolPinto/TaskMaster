@@ -35,7 +35,7 @@ namespace TaskMaster.Test.MainViewModelTests
         public void When_no_task_item_is_selected_then_no_task_can_be_played()
         {
             // Given
-            var mainViewModel = MVMHelpers.SutWithNullTaskList();
+            var mainViewModel = MVMHelpers.SutWithNullTaskLists();
             mainViewModel.SelectedTask = null;
 
             // When

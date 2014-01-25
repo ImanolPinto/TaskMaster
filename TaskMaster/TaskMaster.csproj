@@ -89,6 +89,7 @@
     <Compile Include="Model\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\PausedToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\PlayingToVisibilityConverter.cs" />
+    <Compile Include="Model\Messages\OpenArchivedTasksViewMsg.cs" />
     <Compile Include="Model\Messages\OpenPlayedTimesSummaryMsg.cs" />
     <Compile Include="Model\PlaySession.cs" />
     <Compile Include="Model\DataServices\ArchiveTaskResult.cs" />

@@ -6,7 +6,7 @@ namespace TaskMaster.Design
 {
     public class DesignTaskListDataService : ITaskListDataService
     {
-        public List<TaskItem> GetUnarchivedTasks()
+        public List<TaskItem> GetActiveTasks()
         {
             var list = new List<TaskItem>();
 
@@ -26,6 +26,19 @@ namespace TaskMaster.Design
             return list;
         }
 
+        public List<TaskItem> GetRecentArchivedTasks()
+        {
+            var list = new List<TaskItem>();
+            for (int i = 0; i < 10; i++)
+            {
+                list.Add(new TaskItemBuilder(Guid.NewGuid())
+                    .WithDescription("Archived task description " + i)
+                    .WithTag(i.ToString())
+                    .Build());
+            }
+
+            return list;
+        }
 
         public ArchiveTaskResult ArchiveTask(TaskItem task)
         {

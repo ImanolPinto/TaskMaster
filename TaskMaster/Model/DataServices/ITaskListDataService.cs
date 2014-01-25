@@ -9,7 +9,9 @@ namespace TaskMaster.Model
 {
     public interface ITaskListDataService
     {
-        List<TaskItem> GetUnarchivedTasks();
+        List<TaskItem> GetActiveTasks();
+        List<TaskItem> GetRecentArchivedTasks();
+
         ArchiveTaskResult ArchiveTask(TaskItem task);
     }
 }

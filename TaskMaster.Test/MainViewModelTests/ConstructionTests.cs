@@ -20,14 +20,14 @@ namespace TaskMaster.Test.MainViewModelTests
             // Given
             var taskListServiceMock = new Mock<ITaskListDataService>();
             var taskPlayerMock = new Mock<ITaskPlayer>();
-            taskListServiceMock.Setup(x => x.GetUnarchivedTasks());
+            taskListServiceMock.Setup(x => x.GetActiveTasks());
             var timeProviderMock = new Mock<ITimeProvider>();
 
             // When
             var mainViewModel = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
 
             // Then
-            taskListServiceMock.Verify(x => x.GetUnarchivedTasks(), Times.Once());
+            taskListServiceMock.Verify(x => x.GetActiveTasks(), Times.Once());
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace TaskMaster.Test.MainViewModelTests
                 new TaskItemBuilder(Guid.NewGuid()).Build()
             };
 
-            taskListServiceMock.Setup(x => x.GetUnarchivedTasks()).Returns(taskList);
+            taskListServiceMock.Setup(x => x.GetActiveTasks()).Returns(taskList);
             var timeProviderMock = new Mock<ITimeProvider>();
 
             // When
@@ -50,13 +50,24 @@ namespace TaskMaster.Test.MainViewModelTests
             while (mainViewModel.ActiveTaskList == null) ; // wait for the async bgworker to complete
 
             // Then
-            taskListServiceMock.Verify(x => x.GetUnarchivedTasks(), Times.Once());
+            taskListServiceMock.Verify(x => x.GetActiveTasks(), Times.Once());
             Assert.AreEqual(mainViewModel.ActiveTaskList, new ObservableCollection<TaskItem>(taskList));
         }
 
-        #region Archive task
+        [Test]
+        public void Given_a_TaskListRetrieval_service_that_returns_an_empty_archived_task_list_when_the_MainViewModel_is_constructed_then_the_service_is_called_and_no_error_happens()
+        {
+            // Given
+            var taskListServiceMock = new Mock<ITaskListDataService>();
+            var taskPlayerMock = new Mock<ITaskPlayer>();
+            taskListServiceMock.Setup(x => x.GetRecentArchivedTasks());
+            var timeProviderMock = new Mock<ITimeProvider>();
 
+            // When
+            var mainViewModel = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
 
-        #endregion
+            // Then
+            taskListServiceMock.Verify(x => x.GetRecentArchivedTasks(), Times.Once());
+        }
     }
 }

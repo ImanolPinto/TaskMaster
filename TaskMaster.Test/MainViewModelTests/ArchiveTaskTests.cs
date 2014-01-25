@@ -46,7 +46,7 @@ namespace TaskMaster.Test.MainViewModelTests
         public void Given_a_null_active_list_when_ArchiveTaskCmd_is_handled_it_does_nothing()
         {
             // Given
-            var sut = MVMHelpers.SutWithNullTaskList();
+            var sut = MVMHelpers.SutWithNullTaskLists();
 
             // Then
             sut.ArchiveTaskItemCmd.Execute(Guid.NewGuid());
