@@ -24,15 +24,15 @@ namespace TaskMaster.ViewModel
             get { return _targetDate; }
             set
             {
+                if (value == _targetDate)
+                    return;
+
                 SetTargetDate(value);
             }
         }
 
         private void SetTargetDate(DateTime value)
         {
-            if (_targetDate == value)
-                return;
-
             _targetDate = value;
             SetTimeListFromTaskList();
             RaisePropertyChanged("TargetDate");
@@ -95,6 +95,7 @@ namespace TaskMaster.ViewModel
             if (_taskList == null)
                 return;
 
+            SetTimeListItems(null);
             _taskList.ForEach(x => AddTimeListItemFromTask(x, _targetDate));
         }
 

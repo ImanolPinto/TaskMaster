@@ -78,6 +78,22 @@ namespace TaskMaster.Test
             Assert.IsTrue(sut.TimeListItems.Count == 1);
         }
 
+        [Test]
+        public void When_two_OpenPlayedTimesSummaryMsg_are_received_only_the_time_list_items_for_the_last_one_are_displayed()
+        {
+            // Given
+            var targetDate = new DateTime(1000, 2, 15);
+            var sut = SutWithTimeProviderReturningATargetDate(targetDate);
+            sut.RegisterForMessagesBeforeView();
+
+            // When
+            Messenger.Default.Send(new OpenPlayedTimesSummaryMsg(TaskItemListWithTwoPlayedTasks(targetDate)));
+            Messenger.Default.Send(new OpenPlayedTimesSummaryMsg(TaskItemListWithASinglePlayedTask(targetDate)));
+
+            // Then
+            Assert.IsTrue(sut.TimeListItems.ToList().Count == 1);
+        }
+
         #region Helpers
 
         private static PlayedTimesSummaryModel SutWithTimeProviderReturningATargetDate(DateTime targetDate)
@@ -86,6 +102,32 @@ namespace TaskMaster.Test
             timeProviderMock.Setup(x => x.Now()).Returns(targetDate);
             var sut = new PlayedTimesSummaryModel(timeProviderMock.Object);
             return sut;
+        }
+
+        private static List<TaskItem> TaskItemListWithASinglePlayedTask(DateTime targetDate)
+        {
+            var playSessionList = new List<PlaySession>() { new PlaySession(targetDate, new TimeSpan(0,3,6)) };
+            return new List<TaskItem>() { new TaskItemBuilder(Guid.NewGuid()).WithPlaySessions(playSessionList).Build() };
+        }
+
+        private static List<TaskItem> TaskItemListWithTwoPlayedTasks(DateTime targetDate)
+        {
+            var playSessionList1 = new List<PlaySession>() 
+            { 
+                new PlaySession(targetDate, new TimeSpan(1, 7, 6))
+            };
+            var playSessionList2 = new List<PlaySession>() 
+            { 
+                new PlaySession(targetDate, new TimeSpan(5, 1, 2))
+            };
+
+            var taskItemList = new List<TaskItem>() 
+            { 
+                new TaskItemBuilder(Guid.NewGuid()).WithPlaySessions(playSessionList1).Build(),
+                new TaskItemBuilder(Guid.NewGuid()).WithPlaySessions(playSessionList2).Build()
+            };
+
+            return taskItemList;
         }
 
         private static List<TaskItem> TaskItemListWithTasksPlayedAtDates(DateTime targetDate, DateTime otherDate)
