@@ -112,6 +112,10 @@
                             Command="{Binding OpenPlayedTimesSummaryCmd}">
                         <Image Source="Images/clock.png" Height="33"/>
                     </Button>
+                    <Button Style="{StaticResource TransparentButton}" Margin="15,0,0,0" ToolTip="Archived tasks" Cursor="Hand"
+                            Command="{Binding OpenArchivedTasksViewCmd}">
+                        <Image Source="Images/folder.png" Width="25"/>
+                    </Button>
                 </StackPanel>
                 <Label Grid.Column="2" 
                        Content="Select a task to edit and play it" 

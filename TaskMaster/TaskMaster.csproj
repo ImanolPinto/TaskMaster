@@ -104,12 +104,19 @@
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ArchiveView.xaml.cs">
+      <DependentUpon>ArchiveView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlayedTimesSummaryView.xaml.cs">
       <DependentUpon>PlayedTimesSummaryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PlayedTimesSummaryModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="Views\ArchiveView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -179,9 +186,6 @@
     <Resource Include="Views\Images\tags.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Images\folder.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Views\Images\exit.png" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +215,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="MainIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Images\folder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -22,6 +22,16 @@ namespace TaskMaster
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
             Messenger.Default.Register<OpenPlayedTimesSummaryMsg>(this, OpenPlayedTimesSummaryMsgReceivedAction);
+            Messenger.Default.Register<OpenArchivedTasksViewMsg>(this, OpenArchivedTasksViewMsgReceivedAction);
+        }
+
+        private void OpenArchivedTasksViewMsgReceivedAction(OpenArchivedTasksViewMsg msg)
+        {
+            if (msg == null)
+                return;
+
+            var archivedTasksView = new ArchiveView();
+            archivedTasksView.ShowDialog();
         }
 
         private void OpenPlayedTimesSummaryMsgReceivedAction(OpenPlayedTimesSummaryMsg msg)
