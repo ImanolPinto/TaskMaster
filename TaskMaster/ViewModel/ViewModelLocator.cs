@@ -42,6 +42,7 @@ namespace TaskMaster.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<PlayedTimesSummaryModel>();
+            SimpleIoc.Default.Register<ArchiveViewModel>();
 
             // Register for messages sent before the view binds the model
             var playedTimesSummaryModel = ServiceLocator.Current.GetInstance<PlayedTimesSummaryModel>();
@@ -62,9 +63,6 @@ namespace TaskMaster.ViewModel
             }
         }
 
-        /// <summary>
-        /// Gets the Main property.
-        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
@@ -73,6 +71,18 @@ namespace TaskMaster.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<PlayedTimesSummaryModel>();
+            }
+        }
+
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public ArchiveViewModel ArchiveViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ArchiveViewModel>();
             }
         }
 

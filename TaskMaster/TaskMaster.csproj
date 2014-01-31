@@ -101,6 +101,7 @@
     <Compile Include="Model\TaskPlayer.cs" />
     <Compile Include="Model\TimeItem.cs" />
     <Compile Include="Model\TimeProvider.cs" />
+    <Compile Include="ViewModel\ArchiveViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>

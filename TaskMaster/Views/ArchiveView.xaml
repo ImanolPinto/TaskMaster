@@ -31,12 +31,13 @@
             <Border.Background>
                 <ImageBrush ImageSource="Images/mainWindowBack.jpg" RenderOptions.BitmapScalingMode="LowQuality"/>
             </Border.Background>
-            <Grid>
-                <StackPanel Grid.ColumnSpan="2"
-            Orientation="Horizontal"
-            Margin="10"
-            VerticalAlignment="Top"
-            HorizontalAlignment="Right">
+            <DockPanel>
+                <StackPanel
+                    DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Margin="10"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right">
                     <Image Source="Images/minimize.png" Height="20" ToolTip="Minimize" MouseDown="Minimize_MouseDown" Cursor="Hand" Margin="2"/>
                     <Image Source="Images/maximize.png" Height="20" ToolTip="Maximize" MouseDown="Maximize_MouseDown" Cursor="Hand" Margin="2" 
                    Visibility="{Binding ElementName=window, Path=WindowState, Converter={StaticResource NormalToVisibilityConverter}}"/>
@@ -44,7 +45,34 @@
                    Visibility="{Binding ElementName=window, Path=WindowState, Converter={StaticResource MaximizedToVisibilityConverter}}"/>
                     <Image Source="Images/exit.png" Height="20" ToolTip="Exit" MouseDown="Exit_MouseDown" Cursor="Hand" Margin="2"/>
                 </StackPanel>
-            </Grid>
+                <ListView Margin="30,10,30,30" 
+                          Style="{StaticResource VerticalTransparentListStyle}"
+                          ItemsSource="{Binding ArchiveTaskList}">
+                    <ListView.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Transparent" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                    </ListView.Resources>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="WhiteSmoke" 
+                                    BorderThickness="0 0 0 1" 
+                                    CornerRadius="0 0 0 20"
+                                    Margin="0,0,0,5">
+                                <Grid Margin="10,0,0,0"
+                                      Height="40">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Text="{Binding Tag}"  Style="{StaticResource TimeListItemStyle}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding Description}"  Style="{StaticResource TimeListItemStyle}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </DockPanel>
         </Border>
     </Grid>
 </Window>
