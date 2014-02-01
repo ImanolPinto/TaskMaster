@@ -258,6 +258,11 @@ namespace TaskMaster.ViewModel
                 _taskPlayer.Pause(taskToArchive);
 
             ActiveTaskList.Remove(taskToArchive);
+
+            if (ArchivedTaskList == null)
+                ArchivedTaskList = new List<TaskItem>();
+
+            ArchivedTaskList.Insert(0, taskToArchive);
         }
 
         private bool CanArchiveTaskItem(Guid taskId)

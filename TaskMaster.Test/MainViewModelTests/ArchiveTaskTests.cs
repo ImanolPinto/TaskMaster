@@ -13,23 +13,57 @@ namespace TaskMaster.Test.MainViewModelTests
     {
 
         [Test]
-        public void Given_a_task_guid_from_the_active_list_when_the_ArchiveTask_command_is_handled_then_the_task_is_removed_from_the_Active_task_list()
+        public void Given_a_task_from_the_active_list_when_the_ArchiveTask_command_is_handled_then_the_data_service_is_called_and_the_task_is_removed_from_the_Active_task_list_and_it_is_added_to_the_Archived_task_list()
         {
             // Given
             Mock<ITaskListDataService> taskListDataServiceMock;
             var sut = MVMHelpers.SutWithTaskList(out taskListDataServiceMock);
-            var guidToArchive = sut.ActiveTaskList[0].Id;
             var taskToArchive = sut.ActiveTaskList[0];
 
             taskListDataServiceMock.Setup(x => x.ArchiveTask(taskToArchive)).Returns(ArchiveTaskResult.Ok);
-            var previousUnarchivedTaskCount = sut.ActiveTaskList.Count();
 
             // When
-            sut.ArchiveTaskItemCmd.Execute(guidToArchive);
+            sut.ArchiveTaskItemCmd.Execute(taskToArchive.Id);
 
             // Then
-            Assert.IsTrue(sut.ActiveTaskList.Count == previousUnarchivedTaskCount - 1);
+            Assert.IsTrue(! sut.ActiveTaskList.Contains(taskToArchive));
+            Assert.IsTrue(sut.ArchivedTaskList.Contains(taskToArchive));
             taskListDataServiceMock.Verify(x => x.ArchiveTask(taskToArchive), Times.Once());
+        }
+
+        [Test]
+        public void Given_a_collection_of_archived_tasks_and_a_task_from_the_active_list_when_the_ArchiveTask_command_is_handled_then_the_task_is_added_as_the_first_element_of_the_Archived_task_list()
+        {
+            // Given
+            var sut = MVMHelpers.SutWithActiveAndArchivedTaskLists();
+            var taskToArchive = sut.ActiveTaskList[0];
+
+            var previousArchivedTasksCount = sut.ArchivedTaskList.Count();
+
+            // When
+            sut.ArchiveTaskItemCmd.Execute(taskToArchive.Id);
+
+            // Then
+            Assert.IsTrue(previousArchivedTasksCount + 1 == sut.ArchivedTaskList.Count());
+            Assert.IsTrue(sut.ArchivedTaskList[0].Id == taskToArchive.Id);
+        }
+
+        [Test]
+        public void Given_a_task_from_the_active_list_and_a_service_that_is_not_responding_when_the_ArchiveTask_command_is_handled_then_the_task_is_not_moved_between_lists()
+        {
+            // Given
+            Mock<ITaskListDataService> taskListDataServiceMock;
+            var sut = MVMHelpers.SutWithTaskList(out taskListDataServiceMock);
+            var taskToArchive = sut.ActiveTaskList[0];
+
+            taskListDataServiceMock.Setup(x => x.ArchiveTask(taskToArchive)).Returns(ArchiveTaskResult.Error);
+
+            // When
+            sut.ArchiveTaskItemCmd.Execute(taskToArchive.Id);
+
+            // Then
+            Assert.IsFalse(!sut.ActiveTaskList.Contains(taskToArchive));
+            Assert.IsTrue(sut.ArchivedTaskList == null);
         }
 
         [Test]

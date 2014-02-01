@@ -1,6 +1,7 @@
 ﻿using Moq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using TaskMaster.Model;
@@ -18,6 +19,18 @@ namespace TaskMaster.Test
             var timeProviderMock = new Mock<ITimeProvider>();
             var mainViewModel = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
             return mainViewModel;
+        }
+
+        public static MainViewModel SutWithActiveAndArchivedTaskLists()
+        {
+            var sut = SutWithArchivedTaskList();
+            sut.ActiveTaskList = new ObservableCollection<TaskItem>()
+            {
+                new TaskItemBuilder(Guid.NewGuid()).Build(),
+                new TaskItemBuilder(Guid.NewGuid()).Build()
+            };
+
+            return sut;
         }
 
         public static MainViewModel SutWithArchivedTaskList()
