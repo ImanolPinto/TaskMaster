@@ -32,19 +32,25 @@
                 <ImageBrush ImageSource="Images/mainWindowBack.jpg" RenderOptions.BitmapScalingMode="LowQuality"/>
             </Border.Background>
             <DockPanel>
-                <StackPanel
-                    DockPanel.Dock="Top"
-                    Orientation="Horizontal"
-                    Margin="10"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Right">
-                    <Image Source="Images/minimize.png" Height="20" ToolTip="Minimize" MouseDown="Minimize_MouseDown" Cursor="Hand" Margin="2"/>
-                    <Image Source="Images/maximize.png" Height="20" ToolTip="Maximize" MouseDown="Maximize_MouseDown" Cursor="Hand" Margin="2" 
+                <DockPanel DockPanel.Dock="Top">
+                    <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                        <Image Source="Images/folder.png" Width="15" Height="15"/>
+                        <Label VerticalAlignment="Center">Archived tasks</Label>
+                    </StackPanel>
+                    <StackPanel
+                        DockPanel.Dock="Top"
+                        Orientation="Horizontal"
+                        Margin="10"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right">
+                        <Image Source="Images/minimize.png" Height="20" ToolTip="Minimize" MouseDown="Minimize_MouseDown" Cursor="Hand" Margin="2"/>
+                        <Image Source="Images/maximize.png" Height="20" ToolTip="Maximize" MouseDown="Maximize_MouseDown" Cursor="Hand" Margin="2" 
                    Visibility="{Binding ElementName=window, Path=WindowState, Converter={StaticResource NormalToVisibilityConverter}}"/>
-                    <Image Source="Images/restore.png" Height="20" ToolTip="Restore" MouseDown="Restore_MouseDown" Cursor="Hand" Margin="2"
+                        <Image Source="Images/restore.png" Height="20" ToolTip="Restore" MouseDown="Restore_MouseDown" Cursor="Hand" Margin="2"
                    Visibility="{Binding ElementName=window, Path=WindowState, Converter={StaticResource MaximizedToVisibilityConverter}}"/>
-                    <Image Source="Images/exit.png" Height="20" ToolTip="Exit" MouseDown="Exit_MouseDown" Cursor="Hand" Margin="2"/>
-                </StackPanel>
+                        <Image Source="Images/exit.png" Height="20" ToolTip="Exit" MouseDown="Exit_MouseDown" Cursor="Hand" Margin="2"/>
+                    </StackPanel>
+                </DockPanel>
                 <ListView Margin="30,10,30,30" 
                           Style="{StaticResource VerticalTransparentListStyle}"
                           ItemsSource="{Binding ArchiveTaskList}">
