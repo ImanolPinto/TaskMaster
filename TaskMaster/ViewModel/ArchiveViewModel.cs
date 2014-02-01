@@ -44,7 +44,6 @@ namespace TaskMaster.ViewModel
                 var designDataService = new DesignTaskListDataService();
                 ArchiveTaskList = new ObservableCollection<TaskItem>(designDataService.GetActiveTasks());
             }
-            RegisterForMessagesBeforeView();
         }
 
         public void RegisterForMessagesBeforeView()

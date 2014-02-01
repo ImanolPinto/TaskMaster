@@ -18,6 +18,7 @@ namespace TaskMaster.Test
         {
             // Given
             var sut = new ArchiveViewModel();
+            sut.RegisterForMessagesBeforeView();
 
             // When
             Messenger.Default.Send<OpenArchivedTasksViewMsg>(null);
@@ -31,6 +32,8 @@ namespace TaskMaster.Test
         {
             // Given
             var sut = new ArchiveViewModel();
+            sut.RegisterForMessagesBeforeView();
+
             sut.ArchiveTaskList = new ObservableCollection<TaskItem>()
             {
                 new TaskItemBuilder(Guid.NewGuid()).Build(),

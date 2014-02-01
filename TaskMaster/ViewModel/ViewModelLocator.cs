@@ -47,6 +47,9 @@ namespace TaskMaster.ViewModel
             // Register for messages sent before the view binds the model
             var playedTimesSummaryModel = ServiceLocator.Current.GetInstance<PlayedTimesSummaryModel>();
             playedTimesSummaryModel.RegisterForMessagesBeforeView();
+
+            var archiveViewModel = ServiceLocator.Current.GetInstance<ArchiveViewModel>();
+            archiveViewModel.RegisterForMessagesBeforeView();
         }
 
         /// <summary>
