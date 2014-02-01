@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using TaskMaster.Design;
 using TaskMaster.Model;
@@ -43,6 +44,20 @@ namespace TaskMaster.ViewModel
                 var designDataService = new DesignTaskListDataService();
                 ArchiveTaskList = new ObservableCollection<TaskItem>(designDataService.GetActiveTasks());
             }
+            RegisterForMessagesBeforeView();
+        }
+
+        public void RegisterForMessagesBeforeView()
+        {
+            Messenger.Default.Register<OpenArchivedTasksViewMsg>(this, x => OpenArchivedTasksViewMsgReceived(x));
+        }
+
+        private void OpenArchivedTasksViewMsgReceived(OpenArchivedTasksViewMsg msg)
+        {
+            if (msg == null)
+                return;
+
+            ArchiveTaskList = new ObservableCollection<TaskItem>(msg.TaskItems);
         }
     }
 }

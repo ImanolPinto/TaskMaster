@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArchiveViewModelTests.cs" />
     <Compile Include="ConvertersTests\PausedToVisibilityConverterTests.cs" />
     <Compile Include="MainViewModelTests\AddTaskTests.cs" />
     <Compile Include="MainViewModelTests\ArchiveTaskTests.cs" />
