@@ -5,6 +5,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMaster.Test", "TaskMast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMaster", "TaskMaster\TaskMaster.csproj", "{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMaster.Storage", "TaskMaster.Storage\TaskMaster.Storage.csproj", "{AA7C2EE9-0316-436F-A46C-53E22845AC67}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - User Interface", "1 - User Interface", "{76129EF2-3FC9-4864-A1EA-F0A0E944C618}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Storage", "2 - Storage", "{242E8AF3-421C-4BB6-BA4B-4484918A6903}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,8 +25,17 @@ Global
 		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA7C2EE9-0316-436F-A46C-53E22845AC67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA7C2EE9-0316-436F-A46C-53E22845AC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA7C2EE9-0316-436F-A46C-53E22845AC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA7C2EE9-0316-436F-A46C-53E22845AC67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF87809D-89F9-457A-B3EC-AD1E8B43FCF1} = {76129EF2-3FC9-4864-A1EA-F0A0E944C618}
+		{630EDEEC-323F-4885-A0AD-050CF53F0ABD} = {76129EF2-3FC9-4864-A1EA-F0A0E944C618}
+		{AA7C2EE9-0316-436F-A46C-53E22845AC67} = {242E8AF3-421C-4BB6-BA4B-4484918A6903}
 	EndGlobalSection
 EndGlobal
