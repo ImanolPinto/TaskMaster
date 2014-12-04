@@ -16,7 +16,7 @@ namespace TaskMaster.Test.MainViewModelTests
     {
         //TODO: open the summary with the union of active, archive and blacklog lists
         [Test]
-        public void Given_a_not_null_active_task_list_when_OpenPlayedTimesSummaryCmd_is_handled_then_OpenPlayedTimesSummaryMsg_is_sent_with_the_active_task_list()
+        public void a_Given_a_not_null_active_task_list_when_OpenPlayedTimesSummaryCmd_is_handled_then_OpenPlayedTimesSummaryMsg_is_sent_with_the_active_task_list()
         {
             // Given
             List<TaskItem> receivedList = null;
@@ -31,7 +31,7 @@ namespace TaskMaster.Test.MainViewModelTests
         }
 
         [Test]
-        public void Given_a_non_empty_archived_task_list_when_OpenArchivedTaskCmd_is_handled_then_OpenArchivedTasksMsg_is_sent_with_the_archived_task_list()
+        public void b_Given_a_non_empty_archived_task_list_when_OpenArchivedTaskCmd_is_handled_then_OpenArchivedTasksMsg_is_sent_with_the_archived_task_list()
         {
             // Given
             List<TaskItem> receivedList = null;
@@ -46,7 +46,7 @@ namespace TaskMaster.Test.MainViewModelTests
         }
 
         [Test]
-        public void Given_an_empty_archived_task_list_then_OpenArchivedTaskCmd_cannot_be_handled()
+        public void c_Given_an_empty_archived_task_list_then_OpenArchivedTaskCmd_cannot_be_handled()
         {
             // Given
             var sut = MVMHelpers.SutWithNullTaskLists();

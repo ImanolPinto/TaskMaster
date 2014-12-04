@@ -23,8 +23,7 @@ namespace TaskMaster.Model
                 if (value == _date)
                     return;
 
-                _date = value;
-                RaisePropertyChanged("Date");
+                SetAndRiseDate(value);
             }
         }
 
@@ -36,26 +35,38 @@ namespace TaskMaster.Model
             }
             set
             {
-                if (value != _playedTime)
-                {
-                    _playedTime = value;
-                    RaisePropertyChanged("PlayedTime");
-                }
+                if (value == _playedTime)
+                    return;
+                
+                SetAndRisePlayedTime(value);
             }
         }
 
         public PlaySession(DateTime playedDate)
         {
-            Date = playedDate;
+            SetAndRiseDate(playedDate);
         }
 
         public PlaySession(DateTime playedDate, TimeSpan playedTime)
         {
-            Date = playedDate;
-            PlayedTime = playedTime;
+            SetAndRiseDate(playedDate);
+            SetAndRisePlayedTime(playedTime);
         }
 
-        #region override
+        private void SetAndRiseDate(DateTime date)
+        {
+            _date = date;
+            RaisePropertyChanged("Date");
+        }
+
+        private void SetAndRisePlayedTime(TimeSpan playedTime)
+        {
+            _playedTime = playedTime;
+            RaisePropertyChanged("PlayedTime");
+        }
+
+        #region implement IEqualityComparer
+
 
         public bool Equals(object x, object y)
         {

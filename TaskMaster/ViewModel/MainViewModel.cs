@@ -157,6 +157,10 @@ namespace TaskMaster.ViewModel
         /// </summary>
         public MainViewModel(ITaskListDataService taskListService, ITaskPlayer taskPlayer, ITimeProvider timeProvider)
         {
+            Ensure.IsNotNull("ITaskListDataService", taskListService);
+            Ensure.IsNotNull("ITaskPlayer", taskPlayer);
+            Ensure.IsNotNull("ITimeProvider", timeProvider);
+
             _taskListService = taskListService;
             _taskPlayer = taskPlayer;
             _timeProvider = timeProvider;

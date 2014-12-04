@@ -37,10 +37,14 @@ namespace TaskMaster.Test
         {
             var taskListServiceMock = new Mock<ITaskListDataService>();
             var taskPlayerMock = new Mock<ITaskPlayer>();
-            var designDataService = new Design.DesignTaskListDataService();
             var timeProviderMock = new Mock<ITimeProvider>();
             var mainViewModel = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
-            mainViewModel.ArchivedTaskList = designDataService.GetRecentArchivedTasks();
+            mainViewModel.ArchivedTaskList = new List<TaskItem>()
+            {
+                new TaskItemBuilder(Guid.NewGuid()).Build(),
+                new TaskItemBuilder(Guid.NewGuid()).Build(),
+                new TaskItemBuilder(Guid.NewGuid()).Build()
+            };
             return mainViewModel;
         }
 

@@ -81,6 +81,9 @@
     <Compile Include="DragAndDrop\ListViewDragDropManager.cs" />
     <Compile Include="DragAndDrop\MouseUtilities.cs" />
     <Compile Include="Model\Builders\BgWorkerBuilder.cs" />
+    <Compile Include="Model\Builders\ITaskItemBuilder.cs" />
+    <Compile Include="Model\Builders\IPlaySessionBuilder.cs" />
+    <Compile Include="Model\Builders\PlaySessionBuilder.cs" />
     <Compile Include="Model\Builders\TaskItemBuilder.cs" />
     <Compile Include="Model\BusinessServices\ITaskPlayer.cs" />
     <Compile Include="Model\BusinessServices\ITimeProvider.cs" />
@@ -91,6 +94,7 @@
     <Compile Include="Model\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\PausedToVisibilityConverter.cs" />
     <Compile Include="Model\Converters\PlayingToVisibilityConverter.cs" />
+    <Compile Include="Model\Ensure.cs" />
     <Compile Include="Model\Messages\OpenArchivedTasksViewMsg.cs" />
     <Compile Include="Model\Messages\OpenPlayedTimesSummaryMsg.cs" />
     <Compile Include="Model\PlaySession.cs" />

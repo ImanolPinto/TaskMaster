@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TaskMasterSQLModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="TaskMasterSQLModelStoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TaskMasterSQLModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TaskMasterSQLEntities" p1:LazyLoadingEnabled="true" >
+          <EntitySet Name="TaskItemStoreds" EntityType="TaskMasterSQLModel.TaskItemStored" />
+          <EntitySet Name="PlaySessionStoreds" EntityType="TaskMasterSQLModel.PlaySessionStored" />
+          <AssociationSet Name="TaskItemPlaySessions" Association="TaskMasterSQLModel.TaskItemPlaySessions">
+            <End Role="TaskItem" EntitySet="TaskItemStoreds" />
+            <End Role="PlaySession" EntitySet="PlaySessionStoreds" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TaskItemStored">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="PlaySessions" Relationship="TaskMasterSQLModel.TaskItemPlaySessions" FromRole="TaskItem" ToRole="PlaySession" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Tag" Nullable="false" />
+          <Property Type="Boolean" Name="IsArchived" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlaySessionStored">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Guid" Name="TaskItemId" Nullable="false" />
+          <Property Type="Int32" Name="PlayedTime_Hours" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="Int32" Name="PlayedTime_Minutes" Nullable="false" />
+          <Property Type="Int32" Name="PlayedTime_Seconds" Nullable="false" />
+          <Property Type="Int32" Name="PlayedTime_Days" Nullable="false" />
+        </EntityType>
+        <Association Name="TaskItemPlaySessions">
+          <End Type="TaskMasterSQLModel.TaskItemStored" Role="TaskItem" Multiplicity="1" />
+          <End Type="TaskMasterSQLModel.PlaySessionStored" Role="PlaySession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaySession">
+              <PropertyRef Name="TaskItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TaskMasterSQLModelStoreContainer" CdmEntityContainer="TaskMasterSQLEntities" />
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -15,12 +15,12 @@ namespace TaskMaster.Test.MainViewModelTests
     public class ConstructionTests
     {
         [Test]
-        public void Given_a_TaskListRetrieval_service_that_returns_a_null_task_list_when_the_MainWindowModel_is_constructed_then_the_service_is_called_and_no_error_happens()
+        public void a_Given_a_TaskListRetrieval_service_that_returns_a_null_task_list_when_the_MainWindowModel_is_constructed_then_the_service_is_called_and_no_error_happens()
         {
             // Given
             var taskListServiceMock = new Mock<ITaskListDataService>();
             var taskPlayerMock = new Mock<ITaskPlayer>();
-            taskListServiceMock.Setup(x => x.GetActiveTasks());
+            taskListServiceMock.Setup(x => x.GetActiveTasks()).Returns(() => null);
             var timeProviderMock = new Mock<ITimeProvider>();
 
             // When
@@ -31,7 +31,7 @@ namespace TaskMaster.Test.MainViewModelTests
         }
 
         [Test]
-        public void Given_a_TaskListRetrieval_service_that_returns_a_task_list_when_the_MainWindowModel_is_constructed_then_the_service_is_called_and_the_task_list_is_populated()
+        public void b_Given_a_TaskListRetrieval_service_that_returns_a_task_list_when_the_MainWindowModel_is_constructed_then_the_service_is_called_and_the_task_list_is_populated()
         {
             // Given
             var taskListServiceMock = new Mock<ITaskListDataService>();
@@ -55,12 +55,12 @@ namespace TaskMaster.Test.MainViewModelTests
         }
 
         [Test]
-        public void Given_a_TaskListRetrieval_service_that_returns_an_empty_archived_task_list_when_the_MainViewModel_is_constructed_then_the_service_is_called_and_no_error_happens()
+        public void c_Given_a_TaskListRetrieval_service_that_returns_an_empty_archived_task_list_when_the_MainViewModel_is_constructed_then_the_service_is_called_and_no_error_happens()
         {
             // Given
             var taskListServiceMock = new Mock<ITaskListDataService>();
             var taskPlayerMock = new Mock<ITaskPlayer>();
-            taskListServiceMock.Setup(x => x.GetRecentArchivedTasks());
+            taskListServiceMock.Setup(x => x.GetRecentArchivedTasks()).Returns(new List<TaskItem>());
             var timeProviderMock = new Mock<ITimeProvider>();
 
             // When

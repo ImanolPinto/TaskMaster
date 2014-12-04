@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskMaster.Storage
+namespace TaskMaster.Shared
 {
-    public class Class1
+    public static class Ensure
     {
+        
     }
 }
