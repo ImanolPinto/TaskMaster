@@ -195,7 +195,7 @@ namespace TaskMaster.ViewModel
 
         private void PopulateArchivedTasks(object sender, DoWorkEventArgs e)
         {
-            ArchivedTaskList = _taskListService.GetRecentArchivedTasks();
+            ArchivedTaskList = _taskListService.GetRecentArchivedTasks() as List<TaskItem>;
         }
 
         private bool CanPlayTaskItem()

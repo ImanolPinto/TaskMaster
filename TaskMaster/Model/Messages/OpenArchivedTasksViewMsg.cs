@@ -7,14 +7,14 @@ namespace TaskMaster.Model
 {
     public class OpenArchivedTasksViewMsg
     {
-        List<TaskItem> _taskItems;
+        ICollection<TaskItem> _taskItems;
 
-        public List<TaskItem> TaskItems
+        public ICollection<TaskItem> TaskItems
         {
             get { return _taskItems; }
         }
 
-        public OpenArchivedTasksViewMsg(List<TaskItem> taskItems)
+        public OpenArchivedTasksViewMsg(ICollection<TaskItem> taskItems)
         {
             _taskItems = taskItems;
         }

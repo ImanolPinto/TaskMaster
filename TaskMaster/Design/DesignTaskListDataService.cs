@@ -6,7 +6,7 @@ namespace TaskMaster.Design
 {
     public class DesignTaskListDataService : ITaskListDataService
     {
-        public List<TaskItem> GetActiveTasks()
+        public ICollection<TaskItem> GetActiveTasks()
         {
             var list = new List<TaskItem>();
 
@@ -26,7 +26,7 @@ namespace TaskMaster.Design
             return list;
         }
 
-        public List<TaskItem> GetRecentArchivedTasks()
+        public ICollection<TaskItem> GetRecentArchivedTasks()
         {
             var list = new List<TaskItem>();
             for (int i = 0; i < 10; i++)

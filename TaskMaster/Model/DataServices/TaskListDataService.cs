@@ -7,7 +7,7 @@ namespace TaskMaster.Model
 {
     public class TaskListDataService : ITaskListDataService
     {
-        public List<TaskItem> GetActiveTasks()
+        public ICollection<TaskItem> GetActiveTasks()
         {
             // TODO: implement the real data access
             var taskListDesign = new Design.DesignTaskListDataService();
@@ -22,7 +22,7 @@ namespace TaskMaster.Model
         }
 
 
-        public List<TaskItem> GetRecentArchivedTasks()
+        public ICollection<TaskItem> GetRecentArchivedTasks()
         {
             // TODO: implement real data access
             var taskListDesign = new Design.DesignTaskListDataService();

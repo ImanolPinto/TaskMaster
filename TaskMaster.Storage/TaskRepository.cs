@@ -21,13 +21,13 @@ namespace TaskMaster.Storage
             _sqlEntities = new TaskMasterSQLEntities();
         }
 
-        public List<TaskItem> GetActiveTasks()
+        public ICollection<TaskItem> GetActiveTasks()
         {
             var storedList = _sqlEntities.TaskItemStoreds.Where(x => x.IsArchived == false).ToList();
-            return _mapper.Map(storedList).ToList();
+            return _mapper.Map(storedList);
         }
 
-        public List<TaskItem> GetRecentArchivedTasks()
+        public ICollection<TaskItem> GetRecentArchivedTasks()
         {
             throw new NotImplementedException();
         }

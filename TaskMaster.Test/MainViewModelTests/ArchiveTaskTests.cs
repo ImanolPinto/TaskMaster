@@ -45,7 +45,7 @@ namespace TaskMaster.Test.MainViewModelTests
 
             // Then
             Assert.IsTrue(previousArchivedTasksCount + 1 == sut.ArchivedTaskList.Count());
-            Assert.IsTrue(sut.ArchivedTaskList[0].Id == taskToArchive.Id);
+            Assert.IsTrue(sut.ArchivedTaskList.First().Id == taskToArchive.Id);
         }
 
         [Test]

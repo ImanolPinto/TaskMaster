@@ -34,7 +34,7 @@ namespace TaskMaster.Test.MainViewModelTests
         public void b_Given_a_non_empty_archived_task_list_when_OpenArchivedTaskCmd_is_handled_then_OpenArchivedTasksMsg_is_sent_with_the_archived_task_list()
         {
             // Given
-            List<TaskItem> receivedList = null;
+            ICollection<TaskItem> receivedList = null;
             Messenger.Default.Register<OpenArchivedTasksViewMsg>(this, x => { receivedList = x.TaskItems; });
             var sut = MVMHelpers.SutWithArchivedTaskList();
 
