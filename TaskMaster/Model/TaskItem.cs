@@ -138,7 +138,7 @@ namespace TaskMaster.Model
                 date1.DayOfYear == date2.DayOfYear;
         }
 
-        public void LoadPlaySessions(List<PlaySession> playSessions)
+        public void LoadPlaySessions(ICollection<PlaySession> playSessions)
         {
             if (playSessions == null)
             {
@@ -170,7 +170,7 @@ namespace TaskMaster.Model
             _playSessions.ToList().ForEach(x => _totalPlayedTime += x.PlayedTime);
         }
 
-        private bool AllPlaySessionsHaveDifferentDates(List<PlaySession> playSessions)
+        private bool AllPlaySessionsHaveDifferentDates(ICollection<PlaySession> playSessions)
         {
             try
             {

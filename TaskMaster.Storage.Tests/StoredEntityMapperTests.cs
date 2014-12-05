@@ -5,23 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using TaskMaster.Model;
+using Moq;
+using System.Collections.ObjectModel;
 
 namespace TaskMaster.Storage.Tests
 {
     [TestFixture]
     public class StoredEntityMapperTests
     {
-        private StoredEntityMapper sut;
-        
-        [TestFixtureSetUp]
-        public void Setup()
-        {
-            var _taskItemBuilder = new TaskItemBuilder();
-            var _playSessionBuilder = new PlaySessionBuilder();
-            var _taskItemCollectionMapper = new CollectionMapper<TaskItemStored, TaskItem>();
-            var _playSessionCollectionMapper = new CollectionMapper<PlaySessionStored, PlaySession>();
-            sut = new StoredEntityMapper(_taskItemBuilder, _playSessionBuilder, _taskItemCollectionMapper, _playSessionCollectionMapper);
-        }
+        static TaskItemBuilder _taskItemBuilder = new TaskItemBuilder();
+        static PlaySessionBuilder _playSessionBuilder = new PlaySessionBuilder();
 
         [Test]
         public void a_Given_a_null_object_when_Map_is_requested_then_null_is_returned()
@@ -31,6 +24,8 @@ namespace TaskMaster.Storage.Tests
             TaskItemStored taskItemStored = null;
             List<PlaySessionStored> playSessionStoredList = null;
             PlaySessionStored playSessionStored = null;
+
+            var sut = GiveNewSutConfiguredWith(taskItemStoredList, playSessionStoredList);
 
             // When
             var taskItemStoredListResult = sut.Map(taskItemStoredList);
@@ -48,7 +43,7 @@ namespace TaskMaster.Storage.Tests
         
         
         [Test]
-        public void d_Given_a_populated_StoredTaskItem_list_when_Map_is_requested_then_it_is_mapped_correctly()
+        public void d_Given_a_populated_StoredTaskItem_list_when_Map_is_requested_then_the_task_item_collection_mapper_is_used()
         {
             // Given
             var listToMap = new List<TaskItemStored>()
@@ -58,8 +53,7 @@ namespace TaskMaster.Storage.Tests
                     Id = Guid.NewGuid(),
                     Description = "hola",
                     Tag = "tag",
-                    IsArchived = true,
-                    PlaySessions = _anyPlaySessionStoredList
+                    IsArchived = true
                 },
                 new TaskItemStored() 
                 { 
@@ -67,18 +61,34 @@ namespace TaskMaster.Storage.Tests
                 }
             };
 
-            // When
-            List<TaskItem> mappedItems = sut.Map(listToMap).ToList();
+            // Mock behaviour is strict, if mappers were not used it would fail
+            Mock<ICollectionMapper<TaskItemStored, TaskItem>> taskItemCollectionMapperMock;
+            var sut = GiveNewSutConfiguredWith(listToMap, null, out taskItemCollectionMapperMock);
 
-            // Then
-            Assert.IsTrue(mappedItems.Count == listToMap.Count);
-            Assert.IsTrue(mappedItems[0].PlaySessions.Count == listToMap[0].PlaySessions.Count);
-            Assert.IsTrue(mappedItems[0].Id == listToMap[0].Id);
+            // When
+            sut.Map(listToMap);
+            taskItemCollectionMapperMock.VerifyAll();
+        }
+
+        [Test]
+        public void e_Given_a_populated_play_session_list_when_Map_is_requested_then_the_play_session_collection_mapper_is_used()
+        {
+            // Mock behaviour is strict, if mappers were not used it would fail
+            Mock<ICollectionMapper<PlaySessionStored, PlaySession>> playSessionCollectionMapperMock;
+            var listToMap = _anyPlaySessionStoredList;
+            var sut = GiveNewSutConfiguredWith(null, listToMap, out playSessionCollectionMapperMock);
+
+            // When
+            sut.Map(_anyPlaySessionStoredList);
+            playSessionCollectionMapperMock.VerifyAll();
         }
 
         [Test]
         public void e_Given_a_complete_PlaySessionStored_when_it_is_mapped_then_it_is_mapped_correctly()
         {
+            // Given
+            var sut = GiveNewSutConfiguredWith(null, null);
+
             // When
             var mapped = sut.MapPlaySessionStored(_completePlaySessionStored);
 
@@ -94,6 +104,7 @@ namespace TaskMaster.Storage.Tests
         public void f_Given_a_PlaySessionStored_with_not_initialized_properties_when_it_is_mapped_then_it_is_mapped_correctly()
         {
             // Given
+            var sut = GiveNewSutConfiguredWith(null, null);
             var stored = new PlaySessionStored();
 
             // When
@@ -105,7 +116,58 @@ namespace TaskMaster.Storage.Tests
             Assert.IsTrue(mapped.PlayedTime.Seconds == 0);
         }
 
-        
+        private static StoredEntityMapper GiveNewSutConfiguredWith(
+            ICollection<TaskItemStored> storedTaskItems, 
+            ICollection<PlaySessionStored> storedPlaySessions)
+        {
+            Mock<ICollectionMapper<TaskItemStored, TaskItem>> taskItemCollectionMapperMock;
+            Mock<ICollectionMapper<PlaySessionStored, PlaySession>> playSessionCollectionMapperMock;
+            var sut = GiveNewSutConfiguredWith(storedTaskItems, storedPlaySessions, out taskItemCollectionMapperMock, out playSessionCollectionMapperMock);
+            return sut;
+        }
+
+        private static StoredEntityMapper GiveNewSutConfiguredWith(
+            ICollection<TaskItemStored> storedTaskItems,
+            ICollection<PlaySessionStored> storedPlaySessions,
+            out Mock<ICollectionMapper<TaskItemStored, TaskItem>> taskItemCollectionMapperMock)
+        {
+            Mock<ICollectionMapper<PlaySessionStored, PlaySession>> playSessionCollectionMapperMock;
+            var sut = GiveNewSutConfiguredWith(storedTaskItems, storedPlaySessions, out taskItemCollectionMapperMock, out playSessionCollectionMapperMock);
+            return sut;
+        }
+
+        private static StoredEntityMapper GiveNewSutConfiguredWith(
+            ICollection<TaskItemStored> storedTaskItems,
+            ICollection<PlaySessionStored> storedPlaySessions,
+            out Mock<ICollectionMapper<PlaySessionStored, PlaySession>> playSessionCollectionMapperMock)
+        {
+            Mock<ICollectionMapper<TaskItemStored, TaskItem>> taskItemCollectionMapperMock;
+            var sut = GiveNewSutConfiguredWith(storedTaskItems, storedPlaySessions, out taskItemCollectionMapperMock, out playSessionCollectionMapperMock);
+            return sut;
+        }
+
+        private static StoredEntityMapper GiveNewSutConfiguredWith(
+            ICollection<TaskItemStored> storedTaskItems,
+            ICollection<PlaySessionStored> storedPlaySessions,
+            out Mock<ICollectionMapper<TaskItemStored, TaskItem>> taskItemCollectionMapperMock,
+            out Mock<ICollectionMapper<PlaySessionStored, PlaySession>> playSessionCollectionMapperMock)
+        {
+            taskItemCollectionMapperMock = new Mock<ICollectionMapper<TaskItemStored, TaskItem>>(MockBehavior.Strict);
+            playSessionCollectionMapperMock = new Mock<ICollectionMapper<PlaySessionStored, PlaySession>>(MockBehavior.Strict);
+            
+            var sut = new StoredEntityMapper(_taskItemBuilder, _playSessionBuilder, taskItemCollectionMapperMock.Object, playSessionCollectionMapperMock.Object);
+
+            // setup of item mappers
+            taskItemCollectionMapperMock.Setup(x => x.WithPerItemMapper(sut.MapTaskItemStored)).Returns(taskItemCollectionMapperMock.Object);
+            playSessionCollectionMapperMock.Setup(x => x.WithPerItemMapper(sut.MapPlaySessionStored)).Returns(playSessionCollectionMapperMock.Object);
+
+            taskItemCollectionMapperMock.Setup(x => x.WithCollectionToMap(storedTaskItems)).Returns(taskItemCollectionMapperMock.Object);
+            taskItemCollectionMapperMock.Setup(x => x.Map()).Returns(() => new Collection<TaskItem>()); // no real mapping is performed
+            playSessionCollectionMapperMock.Setup(x => x.WithCollectionToMap(storedPlaySessions)).Returns(playSessionCollectionMapperMock.Object);
+            playSessionCollectionMapperMock.Setup(x => x.Map()).Returns(() => new Collection<PlaySession>()); // no real mapping is performed
+            
+            return sut;
+        }
 
         private static PlaySessionStored _completePlaySessionStored = new PlaySessionStored()
         {

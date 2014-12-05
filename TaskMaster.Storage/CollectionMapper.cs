@@ -12,13 +12,13 @@ namespace TaskMaster.Storage
         Func<TInput, TOutput> _perItemMapper;
         ICollection<TInput> _collectionToMap;
 
-        public CollectionMapper<TInput, TOutput> WithPerItemMapper(Func<TInput, TOutput> mapperFunc)
+        public ICollectionMapper<TInput, TOutput> WithPerItemMapper(Func<TInput, TOutput> mapperFunc)
         {
             _perItemMapper = mapperFunc;
             return this;
         }
 
-        public CollectionMapper<TInput, TOutput> WithCollectionToMap(ICollection<TInput> collectionToMap)
+        public ICollectionMapper<TInput, TOutput> WithCollectionToMap(ICollection<TInput> collectionToMap)
         {
             _collectionToMap = collectionToMap;
             return this;

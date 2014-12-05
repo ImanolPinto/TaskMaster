@@ -10,7 +10,7 @@ namespace TaskMaster.Model
         Guid _taskId;
         string _taskDescription;
         string _taskTag;
-        List<PlaySession> _playSessions;
+        ICollection<PlaySession> _playSessions;
 
         public TaskItemBuilder()
         {
@@ -39,7 +39,7 @@ namespace TaskMaster.Model
             return this;
         }
 
-        public ITaskItemBuilder WithPlaySessions(List<PlaySession> playSessions)
+        public ITaskItemBuilder WithPlaySessions(ICollection<PlaySession> playSessions)
         {
             _playSessions = playSessions;
             return this;

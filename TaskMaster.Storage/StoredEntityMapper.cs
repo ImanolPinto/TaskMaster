@@ -39,7 +39,7 @@ namespace TaskMaster.Storage
             return _taskItemStoredCollectionMapper
                 .WithPerItemMapper(this.MapTaskItemStored)
                 .WithCollectionToMap(storedList)
-                .Map().ToList();
+                .Map();
         }
 
         public TaskItem MapTaskItemStored(TaskItemStored storedItem)
@@ -47,10 +47,12 @@ namespace TaskMaster.Storage
             if (storedItem == null)
                 return null;
 
+            var taskItemMappedPlaySessions = this.Map(storedItem.PlaySessions);
+
             var taskItem =
                 _taskItemBuilder.WithTaskId(storedItem.Id)
                 .WithDescription(storedItem.Description)
-                .WithPlaySessions(Map(storedItem.PlaySessions).ToList())
+                .WithPlaySessions(taskItemMappedPlaySessions)
                 .WithTag(storedItem.Tag)
                 .Build();
 

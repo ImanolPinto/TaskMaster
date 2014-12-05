@@ -6,7 +6,7 @@ namespace TaskMaster.Model
     {
         ITaskItemBuilder WithTaskId(Guid guid);
         ITaskItemBuilder WithDescription(string description);
-        ITaskItemBuilder WithPlaySessions(List<PlaySession> playSessions);
+        ITaskItemBuilder WithPlaySessions(ICollection<PlaySession> playSessions);
         ITaskItemBuilder WithTag(string tag);
         TaskItem Build();
         ITaskItemBuilder Reset();
