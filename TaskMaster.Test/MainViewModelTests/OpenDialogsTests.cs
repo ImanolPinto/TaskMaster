@@ -41,6 +41,9 @@ namespace TaskMaster.Test.MainViewModelTests
             // When
             sut.OpenArchivedTasksViewCmd.Execute(null);
 
+            // wait a bit for messages to travel
+            //while (receivedList == null || sut.ArchivedTaskList == null) ;
+
             // Then
             Assert.IsTrue(receivedList.Count == sut.ArchivedTaskList.Count);
         }

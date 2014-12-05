@@ -39,7 +39,7 @@ namespace TaskMaster.Test
             var taskPlayerMock = new Mock<ITaskPlayer>();
             var timeProviderMock = new Mock<ITimeProvider>();
             var mainViewModel = new MainViewModel(taskListServiceMock.Object, taskPlayerMock.Object, timeProviderMock.Object);
-            mainViewModel.ArchivedTaskList = new List<TaskItem>()
+            mainViewModel.ArchivedTaskList = new ObservableCollection<TaskItem>()
             {
                 new TaskItemBuilder(Guid.NewGuid()).Build(),
                 new TaskItemBuilder(Guid.NewGuid()).Build(),

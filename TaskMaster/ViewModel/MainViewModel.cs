@@ -61,8 +61,8 @@ namespace TaskMaster.ViewModel
             }
         }
 
-        List<TaskItem> _archivedTaskList;
-        public List<TaskItem> ArchivedTaskList
+        ObservableCollection<TaskItem> _archivedTaskList;
+        public ObservableCollection<TaskItem> ArchivedTaskList
         {
             get
             {
@@ -195,7 +195,7 @@ namespace TaskMaster.ViewModel
 
         private void PopulateArchivedTasks(object sender, DoWorkEventArgs e)
         {
-            ArchivedTaskList = _taskListService.GetRecentArchivedTasks() as List<TaskItem>;
+            ArchivedTaskList = new ObservableCollection<TaskItem>(_taskListService.GetRecentArchivedTasks());
         }
 
         private bool CanPlayTaskItem()
@@ -264,7 +264,7 @@ namespace TaskMaster.ViewModel
             ActiveTaskList.Remove(taskToArchive);
 
             if (ArchivedTaskList == null)
-                ArchivedTaskList = new List<TaskItem>();
+                ArchivedTaskList = new ObservableCollection<TaskItem>();
 
             ArchivedTaskList.Insert(0, taskToArchive);
         }
