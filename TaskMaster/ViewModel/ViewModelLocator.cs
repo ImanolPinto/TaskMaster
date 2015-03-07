@@ -37,7 +37,7 @@ namespace TaskMaster.ViewModel
             }
             else
             {
-                SimpleIoc.Default.Register<ITaskListDataService, TaskListDataService>();
+                SimpleIoc.Default.Register<ITaskListDataService, new TaskRepository(>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();

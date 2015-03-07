@@ -5,8 +5,48 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TaskMasterSQLModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="TaskMasterSQLModelStoreContainer" />
-      </Schema></edmx:StorageModels>
+  <EntityContainer Name="TaskMasterSQLModelStoreContainer">
+    <EntitySet Name="TaskItemStoreds" EntityType="TaskMasterSQLModel.Store.TaskItemStoreds" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlaySessionStoreds" EntityType="TaskMasterSQLModel.Store.PlaySessionStoreds" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="TaskItemPlaySessions" Association="TaskMasterSQLModel.Store.TaskItemPlaySessions">
+      <End Role="TaskItem" EntitySet="TaskItemStoreds" />
+      <End Role="PlaySession" EntitySet="PlaySessionStoreds" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TaskItemStoreds">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" />
+    <Property Name="Tag" Type="nvarchar" Nullable="false" />
+    <Property Name="IsArchived" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PlaySessionStoreds">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TaskItemId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PlayedTime_Hours" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="PlayedTime_Minutes" Type="int" Nullable="false" />
+    <Property Name="PlayedTime_Seconds" Type="int" Nullable="false" />
+    <Property Name="PlayedTime_Days" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="TaskItemPlaySessions">
+    <End Role="TaskItem" Type="TaskMasterSQLModel.Store.TaskItemStoreds" Multiplicity="1" />
+    <End Role="PlaySession" Type="TaskMasterSQLModel.Store.PlaySessionStoreds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaskItem">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PlaySession">
+        <PropertyRef Name="TaskItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TaskMasterSQLModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -56,10 +96,33 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TaskMasterSQLModelStoreContainer" CdmEntityContainer="TaskMasterSQLEntities" />
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TaskMasterSQLModelStoreContainer" CdmEntityContainer="TaskMasterSQLEntities">
+    <EntitySetMapping Name="TaskItemStoreds">
+      <EntityTypeMapping TypeName="IsTypeOf(TaskMasterSQLModel.TaskItemStored)">
+        <MappingFragment StoreEntitySet="TaskItemStoreds">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+          <ScalarProperty Name="IsArchived" ColumnName="IsArchived" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlaySessionStoreds">
+      <EntityTypeMapping TypeName="IsTypeOf(TaskMasterSQLModel.PlaySessionStored)">
+        <MappingFragment StoreEntitySet="PlaySessionStoreds">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TaskItemId" ColumnName="TaskItemId" />
+          <ScalarProperty Name="PlayedTime_Hours" ColumnName="PlayedTime_Hours" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="PlayedTime_Minutes" ColumnName="PlayedTime_Minutes" />
+          <ScalarProperty Name="PlayedTime_Seconds" ColumnName="PlayedTime_Seconds" />
+          <ScalarProperty Name="PlayedTime_Days" ColumnName="PlayedTime_Days" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">

@@ -1,0 +1,83 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 12/05/2014 18:56:58
+-- Generated from EDMX file: C:\Users\Imanol Pinto\Documents\Visual Studio 2012\Projects\TaskMaster - Git\TaskMaster.Storage\Model1.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'TaskItemStoreds'
+CREATE TABLE [TaskItemStoreds] (
+    [Id] uniqueidentifier  NOT NULL,
+    [Description] nvarchar(4000)  NOT NULL,
+    [Tag] nvarchar(4000)  NOT NULL,
+    [IsArchived] bit  NOT NULL
+);
+GO
+
+-- Creating table 'PlaySessionStoreds'
+CREATE TABLE [PlaySessionStoreds] (
+    [Id] uniqueidentifier  NOT NULL,
+    [TaskItemId] uniqueidentifier  NOT NULL,
+    [PlayedTime_Hours] int  NOT NULL,
+    [Date] datetime  NOT NULL,
+    [PlayedTime_Minutes] int  NOT NULL,
+    [PlayedTime_Seconds] int  NOT NULL,
+    [PlayedTime_Days] int  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [Id] in table 'TaskItemStoreds'
+ALTER TABLE [TaskItemStoreds]
+ADD CONSTRAINT [PK_TaskItemStoreds]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'PlaySessionStoreds'
+ALTER TABLE [PlaySessionStoreds]
+ADD CONSTRAINT [PK_PlaySessionStoreds]
+    PRIMARY KEY ([Id] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [TaskItemId] in table 'PlaySessionStoreds'
+ALTER TABLE [PlaySessionStoreds]
+ADD CONSTRAINT [FK_TaskItemPlaySessions]
+    FOREIGN KEY ([TaskItemId])
+    REFERENCES [TaskItemStoreds]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_TaskItemPlaySessions'
+CREATE INDEX [IX_FK_TaskItemPlaySessions]
+ON [PlaySessionStoreds]
+    ([TaskItemId]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------
